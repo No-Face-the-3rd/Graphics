@@ -1,3 +1,6 @@
+#define GLEW_STATIC
+
+#include "GLEW\glew.h"
 #include "GLFW\glfw3.h"
 #include "window.h"
 #include <cstring>
@@ -19,6 +22,10 @@ bool Window::init(int a_width, int a_height, char * a_title)
 
 	isInitialized = true;
 
+	glewExperimental = true;
+	glewInit();
+	glClearColor(1.0f,0.0f,1.0f,1.0f);
+
 	return true;
 }
 
@@ -28,6 +35,8 @@ bool Window::step()
 	{
 		return false;
 	}
+
+	glClear(GL_COLOR_BUFFER_BIT);
 	glfwPollEvents();
 	glfwSwapBuffers(winHandle);
 	return !glfwWindowShouldClose(winHandle);

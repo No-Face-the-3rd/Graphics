@@ -13,10 +13,10 @@ private:
 
 	bool isInitialized = false;
 
-	class GLFWwindow *winHandle = nullptr;
+	struct GLFWwindow *winHandle = nullptr;
 
 public:
-	bool init(int a_width, int a_height,char *a_title);
+	bool init(int a_width = 800, int a_height = 600, char *a_title = "I am a Hotdog");
 	bool step();
 	bool term();
 
