@@ -85,3 +85,11 @@ void freeShader(Shader & shader)
 	glDeleteProgram(shader.handle);
 	shader.handle = 0;
 }
+
+void draw(const Shader & shader, const Geometry & geo)
+{
+	glUseProgram(shader.handle);
+	glBindVertexArray(geo.vao);
+
+	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
+}
