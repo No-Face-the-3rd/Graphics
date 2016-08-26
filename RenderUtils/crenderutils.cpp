@@ -3,6 +3,11 @@
 #include "crenderutils.h"
 #include "Vertex.h"
 
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iostream>
+
 #define NULL 0
 
 Geometry makeGeometry(const Vertex * verts, size_t v_size, const unsigned int * tris, size_t t_size)
@@ -76,6 +81,39 @@ Shader makeShader(const char * vsource, const char * fsource)
 	glDeleteShader(vs);
 
 	return retVal;
+}
+
+Shader loadShader(const char * vpath, const char * fpath)
+{
+
+	return loadShaderFromFile(vpath,fpath);
+}
+
+Shader loadShaderFromFile(const char * vShaderFile, const char * fShaderFile)
+{
+	std::string vCode, fCode;
+	try
+	{
+		std::ifstream vertShaderFile(vShaderFile);
+		std::ifstream fragShaderFile(fShaderFile);
+		std::stringstream vShaderStream, fShaderStream;
+
+		vShaderStream << vertShaderFile.rdbuf();
+		fShaderStream << fragShaderFile.rdbuf();
+
+		vertShaderFile.close();
+		fragShaderFile.close();
+
+		vCode = vShaderStream.str();
+		fCode = fShaderStream.str();
+	}
+	catch (std::exception e)
+	{
+		std::cout << "Shaders failed to read!\n";
+	}
+	const char *vertCode = vCode.c_str(), *fragCode = fCode.c_str();
+
+	return makeShader(vertCode, fragCode);
 }
 
 void freeShader(Shader & shader)

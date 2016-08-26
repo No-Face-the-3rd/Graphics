@@ -3,7 +3,7 @@
 #ifndef CRENDERUTILS_H
 #define CRENDERUTILS_H
 
-
+#include <string>
 
 struct Geometry
 {
@@ -25,9 +25,12 @@ struct Shader
 
 Shader makeShader(const char *vsource, const char *fsource);
 
+Shader loadShader(const char *vpath, const char *fpath);
+
+Shader loadShaderFromFile(const char *vShaderFile, const char *fShaderFile);
+
 void freeShader(Shader &shader);
 
 void draw(const Shader &shader, const Geometry &geo);
-
 
 #endif
