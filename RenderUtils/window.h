@@ -16,7 +16,7 @@ private:
 	struct GLFWwindow *winHandle = nullptr;
 
 public:
-	bool init(int a_width = 800, int a_height = 600, char *a_title = "I am a Hotdog");
+	bool init(int a_width = 800, int a_height = 600, char *a_title = "Sassafras");
 	bool step();
 	bool term();
 
