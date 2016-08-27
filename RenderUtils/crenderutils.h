@@ -3,7 +3,6 @@
 #ifndef CRENDERUTILS_H
 #define CRENDERUTILS_H
 
-#include <string>
 
 struct Geometry
 {
@@ -14,9 +13,11 @@ struct Geometry
 	unsigned vao, vbo, ibo, size;
 };
 
-Geometry makeGeometry(const struct Vertex *verts, size_t v_size, const unsigned int *tris, size_t tsize);
+Geometry makeGeometry(const struct vertex *verts, size_t v_size, const unsigned int *tris, size_t tsize);
 
 void freeGeometry(Geometry &geo);
+
+Geometry loadOBJ(const char *path);
 
 struct Shader
 {
@@ -32,5 +33,7 @@ Shader loadShaderFromFile(const char *vShaderFile, const char *fShaderFile);
 void freeShader(Shader &shader);
 
 void draw(const Shader &shader, const Geometry &geo);
+
+void draw(const Shader &shader, const Geometry &geo, float time);
 
 #endif

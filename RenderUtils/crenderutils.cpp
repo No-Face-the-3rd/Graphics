@@ -3,14 +3,19 @@
 #include "crenderutils.h"
 #include "Vertex.h"
 
+#define TINYOBJLOADER_IMPLEMENTATION
+
+#include "OBJ\tiny_obj_loader.h"
+
 #include <string>
 #include <sstream>
 #include <fstream>
 #include <iostream>
 
+
 #define NULL 0
 
-Geometry makeGeometry(const Vertex * verts, size_t v_size, const unsigned int * tris, size_t t_size)
+Geometry makeGeometry(const vertex * verts, size_t v_size, const unsigned int * tris, size_t t_size)
 {
 	Geometry retVal;
 	retVal.size = t_size;
@@ -26,7 +31,7 @@ Geometry makeGeometry(const Vertex * verts, size_t v_size, const unsigned int * 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, retVal.ibo); //scope triangle
 
 	//Initialize the variables
-	glBufferData(GL_ARRAY_BUFFER, v_size * sizeof(Vertex), verts, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, v_size * sizeof(vertex), verts, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, t_size * sizeof(unsigned), tris, GL_STATIC_DRAW);
 
 	//Attributes
@@ -34,8 +39,8 @@ Geometry makeGeometry(const Vertex * verts, size_t v_size, const unsigned int * 
 	glEnableVertexAttribArray(1);
 
 	//attribute index, num elements, type, normalize?,size of vertex, offset
-	glVertexAttribPointer(0,4, GL_FLOAT,GL_FALSE,sizeof(Vertex),(void *)Vertex::POSITION);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)Vertex::COLOR);
+	glVertexAttribPointer(0,4, GL_FLOAT,GL_FALSE,sizeof(vertex),(void *)vertex::POSITION);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)vertex::COLOR);
 
 	//unscope the variables
 	glBindVertexArray(0);
@@ -52,6 +57,35 @@ void freeGeometry(Geometry & geo)
 	glDeleteBuffers(1, &geo.ibo);
 	glDeleteVertexArrays(1, &geo.vao);
 	geo = { 0,0,0,0 };
+}
+
+Geometry loadOBJ(const char * path)
+{
+	tinyobj::attrib_t attrib;
+	std::vector<tinyobj::shape_t> shapes;
+	std::vector<tinyobj::material_t> materials;
+	std::string err;
+
+	bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, path);
+
+	vertex *verts = new vertex[attrib.vertices.size() / 3];
+	unsigned *tris = new unsigned[shapes[0].mesh.indices.size()];
+
+	for (int i = 0; i < attrib.vertices.size() / 3; ++i)
+	{
+		verts[i] = { attrib.vertices[i * 3],attrib.vertices[i * 3 + 1], attrib.vertices[i * 3 + 2],1 };
+	}
+
+	for (int i = 0; i < shapes[0].mesh.indices.size(); ++i)
+	{
+		tris[i] = shapes[0].mesh.indices[i].vertex_index;
+	}
+	Geometry retVal = makeGeometry(verts, attrib.vertices.size() / 3,tris, shapes[0].mesh.indices.size() );
+
+	delete[] verts;
+	delete[] tris;
+
+	return retVal;
 }
 
 Shader makeShader(const char * vsource, const char * fsource)
@@ -126,6 +160,17 @@ void draw(const Shader & shader, const Geometry & geo)
 {
 	glUseProgram(shader.handle);
 	glBindVertexArray(geo.vao);
+
+	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
+}
+
+void draw(const Shader & shader, const Geometry & geo, float time)
+{
+
+	glUseProgram(shader.handle);
+	glBindVertexArray(geo.vao);
+
+	glUniform1f(glGetUniformLocation(shader.handle, "time"), time);
 
 	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
 }
