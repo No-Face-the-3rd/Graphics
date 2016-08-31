@@ -72,3 +72,8 @@ bool Window::term()
 	isInitialized = false;
 	return true;
 }
+
+float Window::getTime()
+{
+	return glfwGetTime();
+}

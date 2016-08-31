@@ -19,6 +19,7 @@ public:
 	bool init(int a_width = 800, int a_height = 600, char *a_title = "Sassafras");
 	bool step();
 	bool term();
+	float getTime();
 
 };
 

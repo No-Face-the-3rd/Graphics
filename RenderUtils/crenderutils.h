@@ -4,7 +4,6 @@
 #define CRENDERUTILS_H
 
 
-
 struct Geometry
 {
 	// VBO : Vertex Buffer Object : an array of vertices
@@ -14,9 +13,11 @@ struct Geometry
 	unsigned vao, vbo, ibo, size;
 };
 
-Geometry makeGeometry(const struct Vertex *verts, size_t v_size, const unsigned int *tris, size_t tsize);
+Geometry makeGeometry(const struct vertex *verts, size_t v_size, const unsigned int *tris, size_t tsize);
 
 void freeGeometry(Geometry &geo);
+
+Geometry loadOBJ(const char *path);
 
 struct Shader
 {
@@ -25,9 +26,14 @@ struct Shader
 
 Shader makeShader(const char *vsource, const char *fsource);
 
+Shader loadShader(const char *vpath, const char *fpath);
+
+Shader loadShaderFromFile(const char *vShaderFile, const char *fShaderFile);
+
 void freeShader(Shader &shader);
 
 void draw(const Shader &shader, const Geometry &geo);
 
+void draw(const Shader &shader, const Geometry &geo, float time);
 
 #endif
