@@ -5,7 +5,7 @@
 
 #define TINYOBJLOADER_IMPLEMENTATION
 
-#include "OBJ\tiny_obj_loader.h"
+#include "tinyobj\tiny_obj_loader.h"
 
 #include <string>
 #include <sstream>
