@@ -2,6 +2,8 @@
 
 #include "window.h"
 #include "gallery.h"
+
+
 // This is in a develop branch!
 
 void main()
@@ -17,13 +19,12 @@ void main()
 	gallery.loadObjectOBJ("cube", "../res/models/cube.obj");
 	gallery.loadObjectOBJ("sphere", "../res/models/sphere.obj");
 
-
 	float time = 0;
 	while (window.step())
 	{
-		time += 0.1666f;
-		draw(gallery.getShader("simple"), gallery.getGeometry("cube"), time);
-		draw(gallery.getShader("simple"), gallery.getGeometry("sphere"), time);
+		time += 0.01666f;
+		draw(gallery.getShader("camera"), gallery.getGeometry("cube"));
+		draw(gallery.getShader("camera"), gallery.getGeometry("sphere"));
 	}
 
 
