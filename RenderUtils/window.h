@@ -8,6 +8,8 @@
 class Window
 {
 private:
+	friend class input;
+
 	int width, height;
 	char title[64];
 

@@ -14,7 +14,7 @@ void main()
 {
 
 	vColor = color;
-	vPosition = model * position;
+	vPosition =   model * position;
 
 	gl_Position = projection * view * model * position;
 }
