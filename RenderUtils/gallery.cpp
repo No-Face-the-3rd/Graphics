@@ -31,6 +31,15 @@ bool gallery::makeGeometry(const char * name, const vertex * verts, size_t vSize
 	return true;
 }
 
+bool gallery::generatePlane(const char * name, unsigned rows, unsigned cols)
+{
+	if (geometries.find(name) != geometries.end())
+		return false;
+	else
+		geometries[name] = ::generatePlane(rows, cols);
+	return true;
+}
+
 bool gallery::loadObjectOBJ(const char * name, const char * path)
 {
 	if (geometries.find(name) != geometries.end())
@@ -40,14 +49,38 @@ bool gallery::loadObjectOBJ(const char * name, const char * path)
 	return true;
 }
 
+bool gallery::makeTexture(const char * name, unsigned width, unsigned height, unsigned format, const unsigned char * pixels)
+{
+	if (textures.find(name) != textures.end())
+		return false;
+	else
+		textures[name] = ::makeTexture(width, height, format, pixels);
+
+	return true;
+}
+
+bool gallery::loadTexture(const char * name, const char * path)
+{
+	if (textures.find(name) != textures.end())
+		return false;
+	else
+		textures[name] = ::loadTexture(path);
+	return true;
+}
+
 const Geometry & gallery::getGeometry(const char * name)
 {
-	return geometries[name];
+	return geometries.at(name);
 }
 
 const Shader & gallery::getShader(const char * name)
 {
-	return shaders[name];
+	return shaders.at(name);
+}
+
+const Texture & gallery::getTexture(const char * name)
+{
+	return textures.at(name);
 }
 
 bool gallery::init()
@@ -64,6 +97,10 @@ bool gallery::term()
 	for each(auto geometry in geometries)
 	{
 		freeGeometry(geometry.second);
+	}
+	for each(auto texture in textures)
+	{
+		freeTexture(texture.second);
 	}
 
 	return true;
