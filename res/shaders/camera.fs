@@ -6,7 +6,6 @@ in vec4 vPosition;
 out vec4 outColor;
 
 
-
 void main()
 {
 

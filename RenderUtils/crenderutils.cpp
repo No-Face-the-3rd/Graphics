@@ -12,6 +12,8 @@
 #include <fstream>
 #include <iostream>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb\stb_image.h>
 
 #define NULL 0
 
@@ -37,10 +39,14 @@ Geometry makeGeometry(const vertex * verts, size_t v_size, const unsigned int * 
 	//Attributes
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(3);
 
 	//attribute index, num elements, type, normalize?,size of vertex, offset
-	glVertexAttribPointer(0,4, GL_FLOAT,GL_FALSE,sizeof(vertex),(void *)vertex::POSITION);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)vertex::COLOR);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)vertex::POSITION);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)vertex::COLOR);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)vertex::NORMAL);
+	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)vertex::TEXCOORD);
 
 	//unscope the variables
 	glBindVertexArray(0);
@@ -68,19 +74,30 @@ Geometry loadOBJ(const char * path)
 
 	bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, path);
 
-	vertex *verts = new vertex[attrib.vertices.size() / 3];
-	unsigned *tris = new unsigned[shapes[0].mesh.indices.size()];
+	int vSize = shapes[0].mesh.indices.size();
 
-	for (int i = 0; i < attrib.vertices.size() / 3; ++i)
+	vertex *verts = new vertex[vSize];
+	unsigned *tris = new unsigned[vSize];
+
+	for (int i = 0; i < vSize; ++i)
 	{
-		verts[i] = { attrib.vertices[i * 3],attrib.vertices[i * 3 + 1], attrib.vertices[i * 3 + 2],1 };
+		auto ind = shapes[0].mesh.indices[i];
+
+		const float *p = &attrib.vertices[ind.vertex_index * 3];
+		const float *n = &attrib.normals[ind.normal_index * 3];
+		const float *t = &attrib.texcoords[ind.texcoord_index * 2];
+
+		verts[i].position = glm::vec4(p[0], p[1],p[2],1.0f);
+		verts[i].normal = glm::vec4(n[0], n[1], n[2], 0.0f);
+		verts[1].texCoord = glm::vec2(t[0], t[1]);
+
+		tris[i] = i;
 	}
 
-	for (int i = 0; i < shapes[0].mesh.indices.size(); ++i)
-	{
-		tris[i] = shapes[0].mesh.indices[i].vertex_index;
-	}
-	Geometry retVal = makeGeometry(verts, attrib.vertices.size() / 3,tris, shapes[0].mesh.indices.size() );
+	
+
+	
+	Geometry retVal = makeGeometry(verts, vSize,tris, vSize );
 
 	delete[] verts;
 	delete[] tris;
@@ -192,4 +209,150 @@ void draw(const Shader & shader, const Geometry & geo, const float M[16], const 
 
 	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
 
+}
+
+Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char * pixels)
+{
+	Texture ret = { 0, width, height, format };
+
+	glGenTextures(1, &ret.handle);
+	glBindTexture(GL_TEXTURE_2D, ret.handle);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return ret;
+}
+
+Texture makeTextureF(unsigned square, const float * pixels)
+{
+	Texture ret = { 0,square, square, GL_RED };
+
+	glGenTextures(1, &ret.handle);
+	glBindTexture(GL_TEXTURE_2D, ret.handle);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, square, square, 0, GL_RED, GL_FLOAT, pixels);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+	return ret;
+}
+
+Texture loadTexture(const char * path)
+{
+	Texture ret = { 0,0,0,0 };
+	int width, height, format;
+	unsigned char *pixels;
+
+	stbi_set_flip_vertically_on_load(true);
+	pixels = stbi_load(path, &width, &height, &format, STBI_default);
+
+	if (!pixels)
+	{
+		return ret;
+	}
+
+	switch (format)
+	{
+	case STBI_grey:
+		format = GL_RED;
+		break;
+	case STBI_grey_alpha:
+		format = GL_RG;
+		break;
+	case STBI_rgb:
+		format = GL_RGB;
+		break;
+	case STBI_rgb_alpha:
+		format = GL_RGBA;
+		break;
+	}
+
+	ret = makeTexture(width, height, format, pixels);
+	stbi_image_free(pixels);
+
+	return ret;
+}
+
+void freeTexture(Texture & tex)
+{
+	glDeleteTextures(1, &tex.handle);
+	tex = { 0,0,0,0 };
+}
+
+void draw(const Shader & shader, const Geometry & geo, const Texture & tex, const float M[16], const float V[16], const float P[16], float time)
+{
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	glUseProgram(shader.handle);
+	glBindVertexArray(geo.vao);
+
+	glUniformMatrix4fv(0, 1, GL_FALSE, P);
+	glUniformMatrix4fv(1, 1, GL_FALSE, V);
+	glUniformMatrix4fv(2, 1, GL_FALSE, M);
+
+	glUniform1f(3, time);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, tex.handle);
+	glUniform1i(4, 0);
+
+	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0); 
+}
+
+Geometry generatePlane(unsigned rows, unsigned cols)
+{
+	Geometry ret;
+
+	unsigned vSize = rows * cols, tSize = (rows - 1) * (cols - 1) * 6;
+
+	vertex *verts = new vertex[vSize];
+	unsigned *tris = new unsigned[tSize];
+
+	unsigned ind = 0;
+
+	for (unsigned i = 0; i < rows; ++i)
+	{
+		for (unsigned j = 0; j < cols; ++j)
+		{
+			verts[i * cols + j].position[0] = (float)j;
+			verts[i * cols + j].position[1] = 0.0f;
+			verts[i * cols + j].position[2] = (float)i;
+			verts[i * cols + j].position[3] = 1.0f;
+			verts[i * cols + j].color[0] = verts[i * cols + j].color[1] = verts[i * cols + j].color[2] = verts[i * cols + j].color[3] = 1.0f;
+			
+			if (i < rows - 1 && j < cols - 1)
+			{
+				tris[ind++] = i * cols + j;
+				tris[ind++] = (i + 1) * cols + j;
+				tris[ind++] = (i + 1) * cols + (j + 1);
+
+				tris[ind++] = i * cols + j;
+				tris[ind++] = (i + 1) * cols + (j + 1);
+				tris[ind++] = i * cols + (j + 1);
+			}
+
+			verts[i * cols + j].texCoord[0] = verts[i * cols + j].position[0] / (cols - 1);
+			verts[i * cols + j].texCoord[1] = verts[i * cols + j].position[2] / (rows - 1);
+		}
+	}
+
+	ret = makeGeometry(verts, vSize, tris, tSize);
+
+	delete[] verts;
+	delete[] tris;
+
+	return ret;
 }
