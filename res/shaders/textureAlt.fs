@@ -31,7 +31,18 @@ void main()
 			if(blahPosition.x > 0.0)
 			outColor = outColor * (vec4(1,1,1,1) - texture(tex,blahPosition.xy));
 		}
+	vec4 bler = projection *  view * model * vPosition;
+	float mew = (bler.z / bler.w) * 100 - 99;
+	float blah = texture(tex,vTexCoord).r;
+
+	vec4 meow = vec4(mew, mew, blah + mew,1.0f);
+
+
+
 
 	outColor = vColor * texture(tex,vTexCoord);
+	outColor = meow;
+
+
 
 }

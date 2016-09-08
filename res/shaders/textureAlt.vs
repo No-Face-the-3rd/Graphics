@@ -21,6 +21,9 @@ void main()
 	vPosition = position;
 	vTexCoord = texCoord;
 
-	gl_Position = projection * view * model * position;
-	gl_Position.y += texture(tex,texCoord).r * 15 + cos(time * texture(tex,texCoord).r) * 2.0f;
+	gl_Position =  position;
+	gl_Position.y += texture(tex,texCoord).r * 5 + cos(time * (1 - texture(tex,texCoord).r));
+	gl_Position.x += (cos(time *(1 - texture(tex,texCoord).r)));
+	gl_Position.z += (cos(time * texture(tex,texCoord).r));
+	gl_Position = projection * view * model * gl_Position;
 }
