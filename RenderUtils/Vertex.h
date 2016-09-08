@@ -3,16 +3,20 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
+#include "glm\glm.hpp"
+
 struct vertex
 {
-	float position[4];
-	float color[4];
-	float texCoord[2];
+	glm::vec4 position;
+	glm::vec4 color;
+	glm::vec4 normal;
+	glm::vec2 texCoord;
 
 	enum {
 		POSITION = 0,
 		COLOR =  16,
-		TEXCOORD = 32
+		NORMAL = 32,
+		TEXCOORD = 48
 	};
 };
 

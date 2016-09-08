@@ -27,6 +27,7 @@ void draw(const Shader &shader, const Geometry &geo, float time);
 void draw(const Shader &shader, const Geometry &geo, const float M[16], const float V[16], const float P[16]);
 
 Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char *pixels);
+Texture makeTextureF(unsigned square, const float *pixels);
 
 Texture loadTexture(const char *path);
 
