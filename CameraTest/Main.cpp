@@ -45,6 +45,7 @@ void main()
 	gallery.loadObjectOBJ("cube", "../res/models/cube.obj");
 	gallery.loadObjectOBJ("sphere", "../res/models/sphere.obj");
 	gallery.loadObjectOBJ("spear", "../res/models/soulspear.obj");
+	gallery.loadObjectOBJ("bunny", "../res/models/Bunny.obj");
 
 	float ident[16] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
 
@@ -66,10 +67,12 @@ void main()
 	glm::mat4 mod;
 	gallery.loadShader("lighting", "../res/shaders/lighting.vs", "../res/shaders/lighting.fs");
 
+	gallery.loadTexture("spearDif", "../res/textures/soulspear_diffuse.tga");
+	gallery.loadTexture("spearNorm", "../res/textures/soulspear_normal.tga");
+	gallery.loadTexture("spearSpec", "../res/textures/soulspear_specular.tga");
 
-
-	Texture tray[] = { loadTexture("../res/textures/soulspear_diffuse.tga"),loadTexture("../res/textures/soulspear_normal.tga"),loadTexture("../res/textures/soulspear_specular.tga") };
-
+	Texture tray[] = {gallery.getTexture("spearDif"),gallery.getTexture("spearNorm"), gallery.getTexture("spearSpec")};
+	Texture atray[] = { tex4,tex4,tex4 };
 	while (window.step())
 	{
 		timer.step();
@@ -87,8 +90,9 @@ void main()
 		mod = glm::rotate(curTime, glm::vec3(0.0f, 1.0f, 0.0f));
 
 		
-		draw(gallery.getShader("lighting"), gallery.getGeometry("spear"), glm::value_ptr(mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
+		draw(gallery.getShader("lighting"),  gallery.getGeometry("spear"), glm::value_ptr(mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
 
+		//draw(gallery.getShader("lighting"), gallery.getGeometry("bunny"), glm::value_ptr(mod * glm::translate(glm::vec3(20.0f,5.0f,0.0f))), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
 
 		model = glm::rotate(curTime, glm::vec3(1.0f - fmod(curTime,1.0f), fmod(curTime,1.0f), fmod(curTime,1.0f)/0.5f));
 
@@ -103,6 +107,7 @@ void main()
 		//draw(gallery.getShader("texture2"), gallery.getGeometry("meow"), tex3, glm::value_ptr(mod2), glm::value_ptr(view), glm::value_ptr(proj), curTime);
 		//draw(gallery.getShader("texture2"), purple, tex4, glm::value_ptr(mod2), glm::value_ptr(view), glm::value_ptr(proj), curTime);
 
+		//draw(gallery.getShader("texture2"), gallery.getGeometry("cube"), tex, glm::value_ptr(mod), glm::value_ptr(view), glm::value_ptr(proj));
 
 		//draw(gallery.getShader("texture"), gallery.getGeometry("cube"), tex, glm::value_ptr(glm::rotate(curTime, glm::vec3(0.0f, fmod(curTime, 1.0f), 0.0f)) * model * glm::translate(glm::vec3(3.0f, 1.0f, 0.0f))), glm::value_ptr(view), glm::value_ptr(proj), curTime);
 		//float test = fabs(fmod(curTime / 6.0f, 6.0f));

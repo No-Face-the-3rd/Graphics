@@ -1,3 +1,5 @@
+// shadertype=glsl
+
 #version 430
 
 in vec4 vColor;
@@ -40,8 +42,8 @@ void main()
 
 
 
-	outColor = vColor * texture(tex,vTexCoord);
-	outColor = meow;
+	outColor =  texture(tex,vTexCoord);
+	//outColor = meow;
 
 
 

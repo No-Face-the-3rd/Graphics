@@ -1,17 +1,20 @@
+// shadertype=glsl
+
 #version 430
 
-in vec4 vColor;
 in vec4 vPosition;
+in vec4 vColor;
 in vec4 vNormal;
 in vec2 UV;
 
 
 out vec4 outColor;
 
-layout(location = 0) uniform mat4 projection;
+layout(location = 0) uniform mat4 proj;
 layout(location = 1) uniform mat4 view;
 layout(location = 2) uniform mat4 model;
 layout(location = 3) uniform float time;
+
 
 layout(location = 4) uniform vec4 lightDir;
 layout(location = 5) uniform vec4 lightAmb;
@@ -32,20 +35,34 @@ layout(location = 14) uniform sampler2D specM;
 void main()
 {
 	vec4 lightDir = normalize(vec4(-1.0f,-1.0f,-1.0f,0.0f));
-	vec4 lightAmb = vec4(0.4f,0.4f,0.4f,1.0f);
+	vec4 lightAmb = vec4(0.1f,0.1f,0.4f,1.0f);
 	vec4 lightDif = vec4(1.0f,1.0f,1.0f,1.0f);
-	vec4 lightSpec = vec4(1.0f,1.0f,1.0f,1.0f);
+	vec4 lightSpec = vec4(0.5f,0.5f,0.5f,1.0f);
 
-	vec4 surfAmb = vec4(0.4f,0.4f,0.4f,1.0f);
+	vec4 surfAmb = vec4(0.1f,0.1f,0.1f,1.0f);
 	vec4 surfDif = texture(diffM,UV);
 	vec4 surfSpec = texture(specM,UV);
 	
+
 	float specPow = 8.0f;
 
 	vec4 camPos = inverse(view)[3];
 
-	vec4 norm = model * vNormal;
 	vec4 posit = model * vPosition;
+	vec4 norm = model * vNormal;
+
+	vec4 PP = proj * view * posit;
+
+
+	if(PP.x > 0.0f || PP.y > 0.0f)
+	{
+		norm =  normalize( model * vNormal * ((2.0f * texture(normalM,UV)) - 1.0f));
+	}
+	
+
+
+
+
 
 	vec4 R = reflect(lightDir, norm);
 	vec4 E = normalize(camPos - posit);

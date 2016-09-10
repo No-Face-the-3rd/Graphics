@@ -12,6 +12,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "glm\gtc\random.hpp"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb\stb_image.h>
 
@@ -79,7 +81,7 @@ Geometry loadOBJ(const char * path)
 	vertex *verts = new vertex[vSize];
 	unsigned *tris = new unsigned[vSize];
 
-	for (int i = 0; i < vSize; ++i)
+	for (int i = 0; i < vSize; i++)
 	{
 		auto ind = shapes[0].mesh.indices[i];
 
@@ -92,7 +94,11 @@ Geometry loadOBJ(const char * path)
 		if (ind.texcoord_index >= 0)
 		{
 			const float *t = &attrib.texcoords[ind.texcoord_index * 2];
-			verts[1].texCoord = glm::vec2(t[0], t[1]);
+			verts[i].texCoord = glm::vec2(t[0], t[1]);
+		}
+		else
+		{
+			verts[i].texCoord = glm::vec2(glm::linearRand(0.0f, 1.0f), glm::linearRand(0.0f, 1.0f));
 		}
 
 		tris[i] = i;
