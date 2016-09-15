@@ -32,6 +32,8 @@ layout(location = 13) uniform sampler2D normalM;
 layout(location = 14) uniform sampler2D specM;
 
 
+mat3 cotangent_frame(in vec3 n, in vec3 p, in vec2 uv);
+
 void main()
 {
 	vec4 lightDir = normalize(vec4(-1.0f,-1.0f,-1.0f,0.0f));
@@ -44,40 +46,49 @@ void main()
 	vec4 surfSpec = texture(specM,UV);
 	
 
-	float specPow = 8.0f;
+	float specPow = 32.0f;
 
 	vec4 camPos = inverse(view)[3];
 
-	vec4 posit = model * vPosition;
-	vec4 norm = model * vNormal;
+	vec4 posit = vPosition;
+	vec4 norm = vNormal;
 
-	vec4 PP = proj * view * posit;
+	mat3 TBN = cotangent_frame(norm.xyz, posit.xyz,UV);
 
-
-	if(PP.x > 0.0f || PP.y > 0.0f)
-	{
-		norm =  normalize( model * vNormal * ((2.0f * texture(normalM,UV)) - 1.0f));
-	}
-	
-
-
-
+	norm = vec4( (TBN * (2.0f * texture(normalM, UV).xyz - 1.0f)), 1.0f );
 
 
 	vec4 R = reflect(lightDir, norm);
 	vec4 E = normalize(camPos - posit);
 
-	float lamb = max(0.0f, -dot(norm,lightDir));
+	float lamb = max(0.0f, -dot(lightDir, norm));
 	
-	float spec = pow(max(0.0f,dot(R, E)), specPow);
+	float spec = pow(max(0.0f,dot(E, R)), specPow);
 	
 	vec4 ambient = lightAmb * surfAmb;
 	vec4 diffuse = lightDif * lamb * surfDif;
 	vec4 specular = lightSpec * spec * surfSpec;
 
-
-	outColor =  ambient + diffuse + specular;
-
+	outColor =  ( ambient + diffuse + specular);
 
 
 }
+
+mat3 cotangent_frame(in vec3 n, in vec3 p, in vec2 uv)
+{
+	vec3 dp1 = dFdx(p);
+	vec3 dp2 = dFdy(p);
+	vec2 duv1 = dFdx(uv);
+	vec2 duv2 = dFdy(uv);
+
+	vec3 dp2perp = cross(dp2, n);
+	vec3 dp1perp = cross(n, dp1);
+
+	vec3 t = dp2perp * duv1.x + dp1perp * duv2.x;
+	vec3 b = dp2perp * duv1.y + dp1perp * duv2.y;
+
+	float invMax = inversesqrt(max(dot(t,t),dot(b,b)));
+
+	return mat3(t * invMax, b * invMax, n);
+}
+

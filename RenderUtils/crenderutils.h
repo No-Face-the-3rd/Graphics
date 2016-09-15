@@ -40,4 +40,10 @@ void draw(const Shader &shader, const Geometry &geo, const float M[16], const fl
 
 Geometry generatePlane(unsigned rows, unsigned cols);
 
+
+
+
+frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors);
+void freeFrameBuffer(frameBuffer &buff);
+
 #endif

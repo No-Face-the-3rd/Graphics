@@ -38,9 +38,9 @@ void main()
 {
 
 	vColor = color;
-	vPosition = position;
+	vPosition = model * position;
 	UV = texCoord;
-	vNormal = normal;
+	vNormal = model * normal;
 
 
 	vec4 posit = position;
