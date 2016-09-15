@@ -34,8 +34,16 @@ Texture loadTexture(const char *path);
 void freeTexture(Texture &tex);
 
 void draw(const Shader &shader, const Geometry &geo, const Texture &tex, const float M[16], const float V[16], const float P[16], float time = 0.0f);
+void draw(const Shader &shader, const Geometry &geo, const float M[16], const float V[16], const float P[16], const Texture *tex, unsigned t_count, float time = 0.0f);
+
 
 
 Geometry generatePlane(unsigned rows, unsigned cols);
+
+
+
+
+frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors);
+void freeFrameBuffer(frameBuffer &buff);
 
 #endif

@@ -12,6 +12,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "glm\gtc\random.hpp"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb\stb_image.h>
 
@@ -79,17 +81,25 @@ Geometry loadOBJ(const char * path)
 	vertex *verts = new vertex[vSize];
 	unsigned *tris = new unsigned[vSize];
 
-	for (int i = 0; i < vSize; ++i)
+	for (int i = 0; i < vSize; i++)
 	{
 		auto ind = shapes[0].mesh.indices[i];
 
 		const float *p = &attrib.vertices[ind.vertex_index * 3];
 		const float *n = &attrib.normals[ind.normal_index * 3];
-		const float *t = &attrib.texcoords[ind.texcoord_index * 2];
+
 
 		verts[i].position = glm::vec4(p[0], p[1],p[2],1.0f);
 		verts[i].normal = glm::vec4(n[0], n[1], n[2], 0.0f);
-		verts[1].texCoord = glm::vec2(t[0], t[1]);
+		if (ind.texcoord_index >= 0)
+		{
+			const float *t = &attrib.texcoords[ind.texcoord_index * 2];
+			verts[i].texCoord = glm::vec2(t[0], t[1]);
+		}
+		else
+		{
+			verts[i].texCoord = glm::vec2(glm::linearRand(0.0f, 1.0f), glm::linearRand(0.0f, 1.0f));
+		}
 
 		tris[i] = i;
 	}
@@ -312,6 +322,32 @@ void draw(const Shader & shader, const Geometry & geo, const Texture & tex, cons
 	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0); 
 }
 
+void draw(const Shader & shader, const Geometry & geo, const float M[16], const float V[16], const float P[16], const Texture * tex, unsigned t_count, float time)
+{
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+
+	glUseProgram(shader.handle);
+	glBindVertexArray(geo.vao);
+
+	glUniformMatrix4fv(0, 1, GL_FALSE, P);
+	glUniformMatrix4fv(1, 1, GL_FALSE, V);
+	glUniformMatrix4fv(2, 1, GL_FALSE, M);
+
+	glUniform1f(3, time);
+
+	for (int i = 0; i < t_count; ++i)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, tex[i].handle);
+		glUniform1i(12 + i, 0 + i);
+	}
+
+	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
+}
+
+
 Geometry generatePlane(unsigned rows, unsigned cols)
 {
 	Geometry ret;
@@ -346,6 +382,9 @@ Geometry generatePlane(unsigned rows, unsigned cols)
 
 			verts[i * cols + j].texCoord[0] = verts[i * cols + j].position[0] / (cols - 1);
 			verts[i * cols + j].texCoord[1] = verts[i * cols + j].position[2] / (rows - 1);
+
+			verts[i * cols + j].normal = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+
 		}
 	}
 
@@ -355,4 +394,30 @@ Geometry generatePlane(unsigned rows, unsigned cols)
 	delete[] tris;
 
 	return ret;
+}
+
+frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors)
+{
+	frameBuffer ret = { 0,width,height,0,0,0,0,0,0,0,0 };
+
+	glGenFramebuffers(1, &ret.handle);
+	glBindFramebuffer(GL_FRAMEBUFFER, ret.handle);
+
+	const GLenum attachments[8] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5, GL_COLOR_ATTACHMENT6, GL_COLOR_ATTACHMENT7 };
+
+	for (int i = 0; i < numColors && i < 8; i++)
+	{
+		ret.colors[i] = makeTexture(width, height, GL_RGBA, 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, attachments[i], ret.colors[i].handle, 0);
+	}
+
+	glDrawBuffers(numColors, attachments);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	return ret;
+}
+
+void freeFrameBuffer(frameBuffer & buff)
+{
 }

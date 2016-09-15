@@ -29,13 +29,13 @@ void main()
 
 	gallery.generatePlane("meow", 64, 64);
 
-	Geometry purple = genGrid(512, 75);
+	Geometry purple = genGrid(256, 75);
 
 	unsigned char pixels[] ={125,125,0};
 	Texture tex2 = makeTexture(1, 1, 0x1907, pixels);
 	Texture tex = loadTexture("../res/textures/meow.jpg");
 	Texture tex3 = loadTexture("../res/textures/MewMap.jpg");
-	Texture tex4 = genNoise(512, 1);
+	Texture tex4 = genNoise(256, 1);
 
 	gallery.loadShader("simple", "../res/shaders/simple.vs", "../res/shaders/simple.fs");
 	gallery.loadShader("camera", "../res/shaders/camera.vs", "../res/shaders/camera.fs");
@@ -44,7 +44,8 @@ void main()
 
 	gallery.loadObjectOBJ("cube", "../res/models/cube.obj");
 	gallery.loadObjectOBJ("sphere", "../res/models/sphere.obj");
-
+	gallery.loadObjectOBJ("spear", "../res/models/soulspear.obj");
+	gallery.loadObjectOBJ("bunny", "../res/models/Bunny.obj");
 
 	float ident[16] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
 
@@ -61,6 +62,17 @@ void main()
 	float curTime = 0.0f;
 
 	float moveX = -3.0f, moveY = -3.0f, moveZ = -3.0f;
+
+
+	glm::mat4 mod;
+	gallery.loadShader("lighting", "../res/shaders/lighting.vs", "../res/shaders/lighting.fs");
+
+	gallery.loadTexture("spearDif", "../res/textures/soulspear_diffuse.tga");
+	gallery.loadTexture("spearNorm", "../res/textures/soulspear_normal.tga");
+	gallery.loadTexture("spearSpec", "../res/textures/soulspear_specular.tga");
+
+	Texture tray[] = {gallery.getTexture("spearDif"),gallery.getTexture("spearNorm"), gallery.getTexture("spearSpec")};
+	Texture atray[] = { tex4,tex4,tex4 };
 	while (window.step())
 	{
 		timer.step();
@@ -75,8 +87,12 @@ void main()
 
 		curTime = timer.getTime();
 
-		
+		mod = glm::rotate(curTime, glm::vec3(0.0f, 1.0f, 0.0f));
 
+		
+		draw(gallery.getShader("lighting"),  gallery.getGeometry("spear"), glm::value_ptr(mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
+
+		//draw(gallery.getShader("lighting"), gallery.getGeometry("bunny"), glm::value_ptr(mod * glm::translate(glm::vec3(20.0f,5.0f,0.0f))), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
 
 		model = glm::rotate(curTime, glm::vec3(1.0f - fmod(curTime,1.0f), fmod(curTime,1.0f), fmod(curTime,1.0f)/0.5f));
 
@@ -89,8 +105,9 @@ void main()
 		mod2 = glm::scale(glm::vec3(0.5f,1.0f,0.5f)) * glm::translate(glm::vec3(-32.0f, -5.0f, -32.0f));
 
 		//draw(gallery.getShader("texture2"), gallery.getGeometry("meow"), tex3, glm::value_ptr(mod2), glm::value_ptr(view), glm::value_ptr(proj), curTime);
-		draw(gallery.getShader("texture2"), purple, tex4, glm::value_ptr(mod2), glm::value_ptr(view), glm::value_ptr(proj), curTime);
+		//draw(gallery.getShader("texture2"), purple, tex4, glm::value_ptr(mod2), glm::value_ptr(view), glm::value_ptr(proj), curTime);
 
+		//draw(gallery.getShader("texture2"), gallery.getGeometry("cube"), tex, glm::value_ptr(mod), glm::value_ptr(view), glm::value_ptr(proj));
 
 		//draw(gallery.getShader("texture"), gallery.getGeometry("cube"), tex, glm::value_ptr(glm::rotate(curTime, glm::vec3(0.0f, fmod(curTime, 1.0f), 0.0f)) * model * glm::translate(glm::vec3(3.0f, 1.0f, 0.0f))), glm::value_ptr(view), glm::value_ptr(proj), curTime);
 		//float test = fabs(fmod(curTime / 6.0f, 6.0f));
