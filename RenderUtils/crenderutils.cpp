@@ -347,6 +347,33 @@ void draw(const Shader & shader, const Geometry & geo, const float M[16], const 
 	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
 }
 
+void draw(const Shader & shader, const Geometry & geo, const frameBuffer & buff, const float M[16], const float V[16], const float P[16], const Texture * tex, unsigned t_count, float time)
+{
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, buff.handle);
+	glUseProgram(shader.handle);
+	glBindVertexArray(geo.vao);
+
+	glViewport(0, 0, buff.width, buff.height);
+
+	glUniformMatrix4fv(0, 1, GL_FALSE, P);
+	glUniformMatrix4fv(1, 1, GL_FALSE, V);
+	glUniformMatrix4fv(2, 1, GL_FALSE, M);
+
+	glUniform1f(3, time);
+
+	for (int i = 0; i < t_count; ++i)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, tex[i].handle);
+		glUniform1i(12 + i, 0 + i);
+	}
+
+	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
+}
+
 
 Geometry generatePlane(unsigned rows, unsigned cols)
 {
@@ -398,10 +425,13 @@ Geometry generatePlane(unsigned rows, unsigned cols)
 
 frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors)
 {
-	frameBuffer ret = { 0,width,height,0,0,0,0,0,0,0,0 };
+	frameBuffer ret = { 0,width,height,numColors};
 
 	glGenFramebuffers(1, &ret.handle);
 	glBindFramebuffer(GL_FRAMEBUFFER, ret.handle);
+
+	ret.depth = makeTexture(width, height, GL_DEPTH_COMPONENT, 0);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, ret.depth.handle, 0);
 
 	const GLenum attachments[8] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5, GL_COLOR_ATTACHMENT6, GL_COLOR_ATTACHMENT7 };
 
@@ -420,4 +450,19 @@ frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors)
 
 void freeFrameBuffer(frameBuffer & buff)
 {
+	for (unsigned i = 0; i < buff.numColors; i++)
+	{
+		freeTexture(buff.colors[i]);
+	}
+
+	glDeleteFramebuffers(1, &buff.handle);
+	buff = { 0,0,0,0 };
+
+}
+
+void clearFrameBuffer(const frameBuffer & buff)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, buff.handle);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

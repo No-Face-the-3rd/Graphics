@@ -8,7 +8,9 @@ in vec4 vNormal;
 in vec2 UV;
 
 
-out vec4 outColor;
+layout(location = 0)out vec4 outColor;
+layout(location = 1)out vec4 outDiffuse;
+layout(location = 2)out vec4 outSpecular;
 
 layout(location = 0) uniform mat4 proj;
 layout(location = 1) uniform mat4 view;
@@ -66,10 +68,10 @@ void main()
 	float spec = pow(max(0.0f,dot(E, R)), specPow);
 	
 	vec4 ambient = lightAmb * surfAmb;
-	vec4 diffuse = lightDif * lamb * surfDif;
-	vec4 specular = lightSpec * spec * surfSpec;
+	outDiffuse = lightDif * lamb * surfDif;
+	outSpecular = lightSpec * spec * surfSpec;
 
-	outColor =  ( ambient + diffuse + specular);
+	outColor =  ( ambient + outDiffuse + outSpecular);
 
 
 }
