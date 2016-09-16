@@ -50,6 +50,8 @@ void main()
 
 	vec2 texel = 1.0f / textureSize(diffM, 0 ).xy;
 
+	iUV = UV;
+	
 
 	vec4 o[div];
 

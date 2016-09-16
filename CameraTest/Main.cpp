@@ -103,7 +103,7 @@ void main()
 
 		
 		draw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, glm::value_ptr(mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
-		draw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, glm::value_ptr( glm::translate(glm::vec3(4.0f, 0.0f,0.0f)) * mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
+		//draw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, glm::value_ptr( glm::translate(glm::vec3(4.0f, 0.0f,0.0f)) * mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
 
 
 
