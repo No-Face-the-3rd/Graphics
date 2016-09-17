@@ -1,11 +1,18 @@
 #pragma once
 
-#ifndef CRENDERUTILS_H
-#define CRENDERUTILS_H
+#ifndef CRENDERUTILS_MEOW_H
+#define CRENDERUTILS_MEOW_H
+
+
+#include "glLoad.h"
+#include "glMake.h"
+#include "glDraw.h"
+#include "globjects.h"
+#include "Vertex.h"
 
 #include "globjects.h"
 
-Geometry makeGeometry(const struct vertex *verts, size_t v_size, const unsigned int *tris, size_t tsize);
+/*Geometry makeGeometry(const struct vertex *verts, size_t v_size, const unsigned int *tris, size_t tsize);
 
 void freeGeometry(Geometry &geo);
 
@@ -46,6 +53,6 @@ Geometry generatePlane(unsigned rows, unsigned cols);
 
 frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors);
 void freeFrameBuffer(frameBuffer &buff);
-void clearFrameBuffer(const frameBuffer &buff);
+void clearFrameBuffer(const frameBuffer &buff);*/
 
 #endif

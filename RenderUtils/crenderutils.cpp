@@ -1,4 +1,4 @@
-#include "Decs.h"
+﻿#include "Decs.h"
 
 #include "crenderutils.h"
 #include "Vertex.h"
@@ -12,6 +12,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "glinclude.h"
+
 #include "glm\gtc\random.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -19,8 +21,9 @@
 
 #define NULL 0
 
-Geometry makeGeometry(const vertex * verts, size_t v_size, const unsigned int * tris, size_t t_size)
+/*Geometry makeGeometry(const vertex * verts, size_t v_size, const unsigned int * tris, size_t t_size)
 {
+	
 	Geometry retVal;
 	retVal.size = t_size;
 
@@ -69,6 +72,8 @@ void freeGeometry(Geometry & geo)
 
 Geometry loadOBJ(const char * path)
 {
+	glLog("loading OBJ", path);
+
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
@@ -105,7 +110,7 @@ Geometry loadOBJ(const char * path)
 	}
 
 	
-
+	
 	
 	Geometry retVal = makeGeometry(verts, vSize,tris, vSize );
 
@@ -129,13 +134,13 @@ Shader makeShader(const char * vsource, const char * fsource)
 	glShaderSource(fs, 1, &fsource, NULL);
 
 	//compile shaders
-	glCompileShader(vs);
-	glCompileShader(fs);
+	glLog_glCompileShader(vs);
+	glLog_glCompileShader(fs);
 
 	//link shaders
 	glAttachShader(retVal.handle, vs);
 	glAttachShader(retVal.handle, fs);
-	glLinkProgram(retVal.handle);
+	glLog_glLinkProgram(retVal.handle);
 
 	//delete shaders after no longer necessary
 	glDeleteShader(vs);
@@ -153,8 +158,6 @@ Shader loadShader(const char * vpath, const char * fpath)
 Shader loadShaderFromFile(const char * vShaderFile, const char * fShaderFile)
 {
 	std::string vCode, fCode;
-	try
-	{
 		std::ifstream vertShaderFile(vShaderFile);
 		std::ifstream fragShaderFile(fShaderFile);
 		std::stringstream vShaderStream, fShaderStream;
@@ -167,11 +170,7 @@ Shader loadShaderFromFile(const char * vShaderFile, const char * fShaderFile)
 
 		vCode = vShaderStream.str();
 		fCode = fShaderStream.str();
-	}
-	catch (std::exception e)
-	{
-		std::cout << "Shaders failed to read!\n";
-	}
+
 	const char *vertCode = vCode.c_str(), *fragCode = fCode.c_str();
 
 	return makeShader(vertCode, fragCode);
@@ -466,3 +465,9 @@ void clearFrameBuffer(const frameBuffer & buff)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
+*/
+
+
+
+

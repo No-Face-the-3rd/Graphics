@@ -12,26 +12,25 @@ out vec4 vColor;
 out vec4 vNormal;
 out vec2 UV;
 
-layout(location = 0) uniform mat4 proj;
+layout(location = 0) uniform mat4 model;
 layout(location = 1) uniform mat4 view;
-layout(location = 2) uniform mat4 model;
+layout(location = 2) uniform mat4 proj;
 layout(location = 3) uniform float time;
 
+layout(location = 4) uniform sampler2D diffM;
+layout(location = 5) uniform sampler2D normalM;
+layout(location = 6) uniform sampler2D specM;
 
-layout(location = 4) uniform vec4 lightDir;
-layout(location = 5) uniform vec4 lightAmb;
-layout(location = 6) uniform vec4 lightDif;
-layout(location = 7) uniform vec4 lightSpec;
+layout(location = 7) uniform vec4 lightDir;
+layout(location = 8) uniform vec4 lightAmb;
+layout(location = 9) uniform vec4 lightDif;
+layout(location = 10) uniform vec4 lightSpec;
 
-layout(location = 8) uniform vec4 surfAmb;
-layout(location = 9) uniform vec4 surfDif;
-layout(location = 10) uniform vec4 surfSpec;
+layout(location = 11) uniform vec4 surfAmb;
+layout(location = 12) uniform vec4 surfDif;
+layout(location = 13) uniform vec4 surfSpec;
 
-layout(location = 11) uniform float specPow;
-
-layout(location = 12) uniform sampler2D diffM;
-layout(location = 13) uniform sampler2D normalM;
-layout(location = 14) uniform sampler2D specM;
+layout(location = 14) uniform float specPow;
 
 
 void main()

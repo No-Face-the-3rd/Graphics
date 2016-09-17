@@ -131,6 +131,9 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="crenderutils.cpp" />
     <ClCompile Include="gallery.cpp" />
+    <ClCompile Include="glDraw.cpp" />
+    <ClCompile Include="glLoad.cpp" />
+    <ClCompile Include="glMake.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="procgen.cpp" />
     <ClCompile Include="timeManager.cpp" />
@@ -141,6 +144,10 @@
     <ClInclude Include="crenderutils.h" />
     <ClInclude Include="Decs.h" />
     <ClInclude Include="gallery.h" />
+    <ClInclude Include="glDraw.h" />
+    <ClInclude Include="glinclude.h" />
+    <ClInclude Include="glLoad.h" />
+    <ClInclude Include="glMake.h" />
     <ClInclude Include="globjects.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="procgen.h" />

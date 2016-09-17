@@ -44,7 +44,7 @@ void camera::update(const input & input, const timer & timer)
 		if (input.getKeyState(340) == input::DOWN || input.getKeyState(344) == input::DOWN)
 			moveDir -= up;
 
-		if (glm::length(moveDir) >= 0.7f)
+		if (glm::length(moveDir) >= 0.5f)
 		{
 
 			position += glm::normalize(moveDir) * timer.getDeltaTime() * moveSpeed;

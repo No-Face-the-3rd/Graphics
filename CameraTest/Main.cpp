@@ -7,7 +7,8 @@
 #include "camera.h"
 #include "procgen.h"
 
-#include "Vertex.h"
+#include "crenderutils.h"
+
 #include "glm\glm.hpp"
 #include "glm\ext.hpp"
 
@@ -77,11 +78,9 @@ void main()
 	frameBuffer frame = makeFrameBuffer(1360, 768, 2);
 	frameBuffer screen = { 0,1360,768,1 };
 
-	vertex veets[4] = { {{-1,-1,0,1},{},{},{0,0}},{{1,-1,0,1},{},{},{1,0}},{{1,1,0,1},{},{},{1,1}},{{-1,1,0,1},{},{},{0,1}} };
-	unsigned trees[] = { 0,1,2,2,3,0 };
 
 
-	gallery.makeGeometry("quee", veets, 4, trees, 6);
+	gallery.makeGeometry("quee", quadVerts, 4, quadTris, 6);
 
 	gallery.loadShader("post","../res/shaders/post.vs", "../res/shaders/post.fs");
 
@@ -101,13 +100,12 @@ void main()
 
 		mod = glm::rotate(curTime, glm::vec3(0.0f, 1.0f, 0.0f));
 
-		
-		draw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, glm::value_ptr(mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
+		tDraw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, mod, view, proj, curTime, tray[0], tray[1], tray[2]);
 		//draw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, glm::value_ptr( glm::translate(glm::vec3(4.0f, 0.0f,0.0f)) * mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
 
 
 
-		draw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::value_ptr(glm::mat4()), glm::value_ptr(glm::mat4()), glm::value_ptr(glm::mat4()), frame.colors, frame.numColors, curTime);
+		tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::mat4(), glm::mat4(), glm::mat4(), curTime, frame.colors[0], frame.colors[1], frame.colors[2]);
 
 
 		//draw(gallery.getShader("lighting"), gallery.getGeometry("bunny"), glm::value_ptr(mod * glm::translate(glm::vec3(20.0f,5.0f,0.0f))), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);

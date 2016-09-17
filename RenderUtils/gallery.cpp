@@ -31,14 +31,14 @@ bool gallery::makeGeometry(const char * name, const vertex * verts, size_t vSize
 	return true;
 }
 
-bool gallery::generatePlane(const char * name, unsigned rows, unsigned cols)
-{
-	if (geometries.find(name) != geometries.end())
-		return false;
-	else
-		geometries[name] = ::generatePlane(rows, cols);
-	return true;
-}
+//bool gallery::generatePlane(const char * name, unsigned rows, unsigned cols)
+//{
+//	if (geometries.find(name) != geometries.end())
+//		return false;
+//	else
+//		geometries[name] = ::generatePlane(rows, cols);
+//	return true;
+//}
 
 bool gallery::loadObjectOBJ(const char * name, const char * path)
 {

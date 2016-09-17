@@ -21,7 +21,7 @@ public:
 	bool loadShader(const char *name, const char *vPath, const char *fPath);
 
 	bool makeGeometry(const char *name, const vertex *verts, size_t vSize, const unsigned *tris, size_t tSize);
-	bool generatePlane(const char *name, unsigned rows, unsigned cols);
+	//bool generatePlane(const char *name, unsigned rows, unsigned cols);
 
 
 	bool loadObjectOBJ(const char *name, const char *path);
