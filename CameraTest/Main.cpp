@@ -42,6 +42,7 @@ void main()
 	gallery.loadShader("camera", "../res/shaders/camera.vs", "../res/shaders/camera.fs");
 	gallery.loadShader("texture", "../res/shaders/texture.vs", "../res/shaders/texture.fs");
 	gallery.loadShader("texture2", "../res/shaders/textureAlt.vs", "../res/shaders/textureAlt.fs");
+	gallery.loadShader("gPass", "../res/shaders/gPass.vs", "../res/shaders/gPass.fs");
 
 	gallery.loadObjectOBJ("cube", "../res/models/cube.obj");
 	gallery.loadObjectOBJ("sphere", "../res/models/sphere.obj");
