@@ -120,6 +120,8 @@
     <None Include="lighting.vs" />
     <None Include="lPass.fs" />
     <None Include="lPass.vs" />
+    <None Include="nBlur.fs" />
+    <None Include="nBlur.vs" />
     <None Include="post.fs" />
     <None Include="post.vs" />
     <None Include="simple.fs" />

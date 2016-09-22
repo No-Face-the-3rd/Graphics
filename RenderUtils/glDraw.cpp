@@ -12,6 +12,28 @@ void clearFrameBuffer(const frameBuffer & buff)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+void useShaderFlags(const Shader &shader)
+{
+	if (shader.depthTest)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+
+	if (shader.faceCulling)
+		glEnable(GL_CULL_FACE);
+	else
+		glDisable(GL_CULL_FACE);
+
+	if (shader.additiveBlend)
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_ONE, GL_ONE);
+	}
+	else
+		glDisable(GL_BLEND);
+	
+}
+
 void tDraw_internal::tDraw_begin(const Shader & shader, const Geometry & geo, const frameBuffer & buff)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, buff.handle);
@@ -19,8 +41,7 @@ void tDraw_internal::tDraw_begin(const Shader & shader, const Geometry & geo, co
 	glBindVertexArray(geo.vao);
 
 
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
+	useShaderFlags(shader);
 
 	glViewport(0, 0, buff.width, buff.height);
 

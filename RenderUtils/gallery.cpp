@@ -1,24 +1,24 @@
 #include "gallery.h"
 
-bool gallery::makeShader(const char * name, const char * vSource, const char * fSource)
+bool gallery::makeShader(const char * name, const char * vSource, const char * fSource, bool depth, bool add, bool face)
 {
 	if (shaders.find(name) != shaders.end())
 	{
 		return false;
 	}
 	else
-		shaders[name] = ::makeShader(vSource, fSource);
+		shaders[name] = ::makeShader(vSource, fSource, depth, add, face);
 	return true;
 }
 
-bool gallery::loadShader(const char * name, const char * vPath, const char * fPath)
+bool gallery::loadShader(const char * name, const char * vPath, const char * fPath, bool depth, bool add, bool face)
 {
 	if (shaders.find(name) != shaders.end())
 	{
 		return false;
 	}
 	else
-		shaders[name] = ::loadShader(vPath, fPath);
+		shaders[name] = ::loadShader(vPath, fPath, depth, add, face);
 	return true;
 }
 

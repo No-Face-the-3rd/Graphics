@@ -17,8 +17,8 @@ public:
 	std::map<std::string, Shader> shaders;
 	std::map<std::string, Texture> textures;
 
-	bool makeShader(const char *name, const char *vSource, const char *fSource);
-	bool loadShader(const char *name, const char *vPath, const char *fPath);
+	bool makeShader(const char *name, const char *vSource, const char *fSource, bool depth = true, bool add = false, bool face = true);
+	bool loadShader(const char *name, const char *vPath, const char *fPath, bool depth = true, bool add = false, bool face = true);
 
 	bool makeGeometry(const char *name, const vertex *verts, size_t vSize, const unsigned *tris, size_t tSize);
 	//bool generatePlane(const char *name, unsigned rows, unsigned cols);

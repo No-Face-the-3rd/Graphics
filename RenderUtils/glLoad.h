@@ -12,7 +12,7 @@
 Geometry loadOBJ(const char *path);
 
 
-Shader loadShader(const char *vShaderFile, const char *fShaderFile);
+Shader loadShader(const char *vShaderFile, const char *fShaderFile, bool depth = true, bool add = false, bool face = true);
 
 Texture loadTexture(const char *path);
 

@@ -31,7 +31,7 @@ void main()
 	vec3 reflection = reflect(light, normal);
 
 
-	vec3 E = -normalize(texture(positionM, UV).xyz);
+	vec3 E = normalize(view[3].xyz + texture(positionM, UV).xyz);
 
 	float specPow = 32.0f;
 

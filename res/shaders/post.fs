@@ -50,7 +50,7 @@ void main()
 
 	vec2 texel = 1.0f / textureSize(diffM, 0 ).xy;
 
-	iUV = UV;
+	//iUV = UV;
 	
 
 
@@ -81,7 +81,7 @@ void main()
 	int num = 1;
 
 	for(int i = 0;i < div;i++)
-		if(o[i] != vec4(1,0,1,1))
+		if(o[i] != vec4(0,0,0,0))
 			{
 				outColor += o[i];
 				num++;			

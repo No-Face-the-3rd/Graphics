@@ -70,6 +70,7 @@ void main()
 	outDiffuse = lightDif * lamb * surfDif;
 	outSpecular = lightSpec * spec * surfSpec;
 
+
 	outColor =  ( ambient + outDiffuse + outSpecular);
 
 

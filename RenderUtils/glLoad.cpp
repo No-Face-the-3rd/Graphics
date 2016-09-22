@@ -59,7 +59,7 @@ Geometry loadOBJ(const char * path)
 	return retVal;
 }
 
-Shader loadShader(const char * vShaderFile, const char * fShaderFile)
+Shader loadShader(const char * vShaderFile, const char * fShaderFile, bool depth, bool add, bool face)
 {
 	std::string vCode, fCode;
 	std::ifstream vertShaderFile(vShaderFile);
@@ -77,7 +77,7 @@ Shader loadShader(const char * vShaderFile, const char * fShaderFile)
 
 	const char *vertCode = vCode.c_str(), *fragCode = fCode.c_str();
 
-	return makeShader(vertCode, fragCode);
+	return makeShader(vertCode, fragCode, depth, add, face);
 }
 
 
