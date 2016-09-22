@@ -63,5 +63,11 @@
     <None Include="gPass.fs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="lPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

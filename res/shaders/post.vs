@@ -43,7 +43,7 @@ void main()
 
 
 
-	gl_Position = position;
+	gl_Position = model * position;
 	UV = texCoord;
 
 }

@@ -43,6 +43,7 @@ void main()
 	gallery.loadShader("texture", "../res/shaders/texture.vs", "../res/shaders/texture.fs");
 	gallery.loadShader("texture2", "../res/shaders/textureAlt.vs", "../res/shaders/textureAlt.fs");
 	gallery.loadShader("gPass", "../res/shaders/gPass.vs", "../res/shaders/gPass.fs");
+	gallery.loadShader("lPass", "../res/shaders/lPass.vs", "../res/shaders/lPass.fs");
 
 	gallery.loadObjectOBJ("cube", "../res/models/cube.obj");
 	gallery.loadObjectOBJ("sphere", "../res/models/sphere.obj");
@@ -76,7 +77,8 @@ void main()
 	Texture tray[] = {gallery.getTexture("spearDif"),gallery.getTexture("spearNorm"), gallery.getTexture("spearSpec")};
 	//Texture atray[] = { tex4,tex4,tex4 };
 
-	frameBuffer frame = makeFrameBuffer(1360, 768, 2);
+	frameBuffer gFrame = makeFrameBuffer(1360, 768, 4);
+	frameBuffer lFrame = makeFrameBuffer(1360, 768, 3);
 	frameBuffer screen = { 0,1360,768,1 };
 
 
@@ -87,7 +89,8 @@ void main()
 
 	while (window.step())
 	{
-		clearFrameBuffer(frame);
+		clearFrameBuffer(gFrame);
+		clearFrameBuffer(lFrame);
 		timer.step();
 		input.step();
 		
@@ -101,13 +104,21 @@ void main()
 
 		mod = glm::rotate(curTime, glm::vec3(0.0f, 1.0f, 0.0f));
 
-		tDraw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, mod, view, proj, curTime, tray[0], tray[1], tray[2]);
+		tDraw(gallery.getShader("gPass"), gallery.getGeometry("spear"), gFrame, mod, view, proj, curTime, tray[0], tray[1], tray[2]);
 		//draw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, glm::value_ptr( glm::translate(glm::vec3(4.0f, 0.0f,0.0f)) * mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
 
+		tDraw(gallery.getShader("lPass"), gallery.getGeometry("quee"), lFrame, glm::mat4(), glm::mat4(), glm::mat4(), curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], gFrame.depth);
+
+		//tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::scale(glm::vec3(0.5,0.5,1.0)), glm::mat4(), glm::mat4(), curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2]);
+
+		for (int i = 0; i < 4; ++i)
+		{
+			glm::mat4 modr = glm::translate(glm::vec3(-0.75f + 0.5f * i, 0.5f, 0.0f)) * glm::scale(glm::vec3(0.25f, 0.5f, 1.0f));
+			//tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, modr, glm::mat4(), glm::mat4(), curTime, gFrame.colors[i], gFrame.colors[i], gFrame.colors[i]);
 
 
-		tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::mat4(), glm::mat4(), glm::mat4(), curTime, frame.colors[0], frame.colors[1], frame.colors[2]);
-
+			tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::translate(glm::vec3(0.0f, -1.0f, 0.0f)) * modr, glm::mat4(), glm::mat4(), curTime, lFrame.colors[i % 3], lFrame.colors[(i + 1) % 3], lFrame.colors[(i + 2)% 3]);
+		}
 
 		//draw(gallery.getShader("lighting"), gallery.getGeometry("bunny"), glm::value_ptr(mod * glm::translate(glm::vec3(20.0f,5.0f,0.0f))), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
 
@@ -156,7 +167,7 @@ void main()
 		draw(gallery.getShader("texture"), gallery.getGeometry("cube"),tex, glm::value_ptr(modelo), glm::value_ptr(view), glm::value_ptr(proj),curTime);*/
 	}
 
-	freeFrameBuffer(frame);
+	freeFrameBuffer(gFrame);
 
 
 	freeTexture(tex);

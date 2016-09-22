@@ -118,6 +118,8 @@
     <None Include="height.vs" />
     <None Include="lighting.fs" />
     <None Include="lighting.vs" />
+    <None Include="lPass.fs" />
+    <None Include="lPass.vs" />
     <None Include="post.fs" />
     <None Include="post.vs" />
     <None Include="simple.fs" />

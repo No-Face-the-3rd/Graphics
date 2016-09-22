@@ -38,7 +38,7 @@ void main()
 	norm = vec4( (TBN * (2.0f * texture(normalM, UV).xyz - 1.0f)), 1.0f );
 
 	outAlbedo = texture(diffM, UV);
-	outNormal = vec4(norm,0);
+	outNormal = vec4(norm.xyz,0);
 	outSpecular = texture(specM, UV);
 	outPosition = posit;
 }
