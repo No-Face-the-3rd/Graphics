@@ -89,11 +89,34 @@ void freeShader(Shader &shader)
 }
 
 
-Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char *pixels)
+Texture makeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char *pixels)
 {
 	glLog("TODO", "Parameter for Channel Count + bit depth + type");
+	GLenum format = GL_RGBA;
 
-	Texture ret = { 0, width, height, format };
+	switch (channels)
+	{
+	case 0:
+		format = GL_DEPTH_COMPONENT;
+		break;
+	case 1: 
+		format = GL_RED;
+		break;
+	case 2:
+		format = GL_RG;
+		break;
+	case 3:
+		format = GL_RGB;
+		break;
+	case 4:
+		format = GL_RGBA;
+		break;
+	default:
+		glLog("ERROR", "Channels must be 0-4");
+
+	}
+
+	Texture ret = { 0, width, height, channels };
 
 	glGenTextures(1, &ret.handle);
 	glBindTexture(GL_TEXTURE_2D, ret.handle);
@@ -146,14 +169,14 @@ frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors)
 	glGenFramebuffers(1, &ret.handle);
 	glBindFramebuffer(GL_FRAMEBUFFER, ret.handle);
 
-	ret.depth = makeTexture(width, height, GL_DEPTH_COMPONENT, 0);
+	ret.depth = makeTexture(width, height, 0, 0);
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, ret.depth.handle, 0);
 
 	const GLenum attachments[8] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5, GL_COLOR_ATTACHMENT6, GL_COLOR_ATTACHMENT7 };
 
 	for (int i = 0; i < numColors && i < 8; i++)
 	{
-		ret.colors[i] = makeTexture(width, height, GL_RGBA, 0);
+		ret.colors[i] = makeTexture(width, height, 4, 0);
 		glFramebufferTexture(GL_FRAMEBUFFER, attachments[i], ret.colors[i].handle, 0);
 	}
 

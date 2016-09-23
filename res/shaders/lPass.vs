@@ -16,7 +16,8 @@ layout(location = 6) uniform sampler2D specM;
 layout(location = 7) uniform sampler2D positionM;
 layout(location = 8) uniform sampler2D depthM;
 
-layout(location = 9) uniform vec4 lDir = normalize(vec4(-1,-1,-1,0));
+layout(location = 9) uniform vec4 lDir;
+layout(location = 10) uniform vec4 lCol;
 
 out vec2 UV;
 

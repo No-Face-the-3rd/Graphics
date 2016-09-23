@@ -16,6 +16,7 @@ layout(location = 7) uniform sampler2D positionM;
 layout(location = 8) uniform sampler2D depthM;
 
 layout(location = 9) uniform vec4 lDir = normalize(vec4(-1,-1,-1,0));
+layout(location = 10) uniform vec4 lCol = vec4(1.0f,1.0f,1.0f,1.0f);
 
 layout(location = 0) out vec4 outColor;
 layout(location = 1) out vec4 outAlbedo;
@@ -42,8 +43,8 @@ void main()
 		spec = pow(spec, specPow);
 	}
 
-	outAlbedo = texture(albedoM, UV) * lamb;
-	outSpec = texture(specM, UV) * spec;
+	outAlbedo = texture(albedoM, UV) * lamb * lCol;
+	outSpec = texture(specM, UV) * spec * lCol;
 	outColor = outAlbedo + outSpec;
 }
 

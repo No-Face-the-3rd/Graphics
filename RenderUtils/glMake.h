@@ -17,7 +17,7 @@ Shader makeShader(const char *vsource, const char *fsource, bool depth = true, b
 void freeShader(Shader &shader);
 
 
-Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char *pixels);
+Texture makeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char *pixels);
 
 Texture makeTextureF(unsigned square, const float *pixels);
 

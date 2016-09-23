@@ -89,5 +89,7 @@ void main()
 
 	outColor /= num;
 
+	//outColor = texture(diffM, UV);
+
 }
 

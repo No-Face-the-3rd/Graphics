@@ -99,21 +99,6 @@ Texture loadTexture(const char * path)
 		return ret;
 	}
 
-	switch (format)
-	{
-	case STBI_grey:
-		format = GL_RED;
-		break;
-	case STBI_grey_alpha:
-		format = GL_RG;
-		break;
-	case STBI_rgb:
-		format = GL_RGB;
-		break;
-	case STBI_rgb_alpha:
-		format = GL_RGBA;
-		break;
-	}
 
 	ret = makeTexture(width, height, format, pixels);
 	stbi_image_free(pixels);
