@@ -67,7 +67,7 @@ void main()
 		float yOff = cos(bleh) * sin( (time + i * 360 / div * PI / 180.0f) ) / scale;
 		vec2 offSet = vec2(xOff, yOff);
 		vec4 xColori = texture(diffM, iUV + offSet + vec2(1,1) * texel) + texture(diffM, iUV + offSet + vec2(1,0) * texel) * 2 + texture(diffM, iUV + offSet + vec2(1,-1) * texel) - texture(diffM, iUV + offSet + vec2(-1,1)) - texture(diffM, iUV + offSet + vec2(-1, 0)) * 2 - texture(diffM, iUV + offSet + vec2(-1,-1));
-		vec4 yColori = texture(diffM, iUV + offSet + vec2(1,-1) * texel) + texture(diffM, iUV + offSet + vec2(0,-1) * texel) * 2 + texture(diffM, iUV + offSet + vec2(-1,-1) * texel) - texture(diffM, iUV + offSet + vec2(-1,1)) - texture(diffM, iUV + offSet + vec2(0 , 1)) * 2 - texture(diffM, iUV + offSet + vec2(-1,-1));
+		vec4 yColori = texture(diffM, iUV + offSet + vec2(1,-1) * texel) + texture(diffM, iUV + offSet + vec2(0,-1) * texel) * 2 + texture(diffM, iUV + offSet + vec2(-1,-1) * texel) - texture(diffM, iUV + offSet + vec2(-1,1)) - texture(diffM, iUV + offSet + vec2(0 , 1)) * 2 - texture(diffM, iUV + offSet + vec2(1,1));
 
 		o[i] = texture(diffM, iUV + vec2( xOff, yOff )) - sqrt(xColori * xColori + yColori * yColori);
 	}
@@ -75,7 +75,7 @@ void main()
 
 	
 	vec4 xColor = texture(diffM, iUV + vec2(1,1) * texel) + texture(diffM, iUV + vec2(1,0) * texel) * 2 + texture(diffM, iUV + vec2(1,-1) * texel) - texture(diffM, iUV + vec2(-1,1)) - texture(diffM, iUV + vec2(-1, 0)) * 2 - texture(diffM, iUV + vec2(-1,-1));
-	vec4 yColor = texture(diffM, iUV + vec2(1,-1) * texel) + texture(diffM, iUV + vec2(0,-1) * texel) * 2 + texture(diffM, iUV + vec2(-1,-1) * texel) - texture(diffM, iUV + vec2(-1,1)) - texture(diffM, iUV + vec2(0 , 1)) * 2 - texture(diffM, iUV + vec2(-1,-1));
+	vec4 yColor = texture(diffM, iUV + vec2(1,-1) * texel) + texture(diffM, iUV + vec2(0,-1) * texel) * 2 + texture(diffM, iUV + vec2(-1,-1) * texel) - texture(diffM, iUV + vec2(-1,1)) - texture(diffM, iUV + vec2(0 , 1)) * 2 - texture(diffM, iUV + vec2(1,1));
 
 	outColor = texture(diffM, iUV) + sqrt(xColor * xColor + yColor * yColor);
 	int num = 1;

@@ -13,6 +13,8 @@
 #include "glm\ext.hpp"
 
 #include <math.h>
+
+#include "meowMath\Math.h"
 // This is in a develop branch!
 
 void main()
@@ -69,6 +71,8 @@ void main()
 	float moveX = -3.0f, moveY = -3.0f, moveZ = -3.0f;
 
 
+
+
 	glm::mat4 mod;
 	gallery.loadShader("lighting", "../res/shaders/lighting.vs", "../res/shaders/lighting.fs");
 
@@ -107,6 +111,10 @@ void main()
 
 
 		mod = glm::rotate(curTime, glm::vec3(0.0f, 1.0f, 0.0f));
+		meow::mat4 bleorg = meow::rotate((0.0f, 1.0f, 0.0f), curTime);
+		std::cout << bleorg;
+		if(curTime > 10.0f)
+			system("pause");
 		tDraw(gallery.getShader("gPass"), gallery.getGeometry("spear"), gFrame, mod, view, proj, curTime, tray[0], tray[1], tray[2]);
 		tDraw(gallery.getShader("gPass"), gallery.getGeometry("quee"), gFrame, glm::translate(glm::vec3(-2,0,-2)) * glm::rotate(45.0f, glm::vec3(0.0f,1.0f,0.0f)) * glm::scale(glm::vec3(2.0f,2.0f,1.0f)), view, proj, curTime, tex, tex, tex);
 		tDraw(gallery.getShader("gPass"), gallery.getGeometry("sphere"), gFrame, mod, view, proj, curTime, tex, tex, tex);
