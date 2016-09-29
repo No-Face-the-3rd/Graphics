@@ -75,5 +75,17 @@
     <None Include="nBlur.fs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="sPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lSPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lSPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

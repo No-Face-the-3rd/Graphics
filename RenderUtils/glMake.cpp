@@ -89,27 +89,33 @@ void freeShader(Shader &shader)
 }
 
 
-Texture makeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char *pixels)
+Texture makeTexture(unsigned width, unsigned height, unsigned channels, const void *pixels, bool isFloat)
 {
 	glLog("TODO", "Parameter for Channel Count + bit depth + type");
-	GLenum format = GL_RGBA;
+	GLenum externFormat = GL_RGBA;
+	GLenum internFormat = isFloat ? GL_RGBA32F : externFormat;
 
 	switch (channels)
 	{
 	case 0:
-		format = GL_DEPTH_COMPONENT;
+		externFormat = GL_DEPTH_COMPONENT;
+		internFormat = GL_DEPTH24_STENCIL8;
 		break;
 	case 1: 
-		format = GL_RED;
+		externFormat = GL_RED;
+		internFormat = isFloat ? GL_R32F : externFormat;
 		break;
 	case 2:
-		format = GL_RG;
+		externFormat = GL_RG;
+		internFormat = isFloat ? GL_RG32F : externFormat;
 		break;
 	case 3:
-		format = GL_RGB;
+		externFormat = GL_RGB;
+		internFormat = isFloat ? GL_RGB32F : externFormat;
 		break;
 	case 4:
-		format = GL_RGBA;
+		externFormat = GL_RGBA;
+		internFormat = isFloat ? GL_RGBA32F : externFormat;
 		break;
 	default:
 		glLog("ERROR", "Channels must be 0-4");
@@ -121,7 +127,7 @@ Texture makeTexture(unsigned width, unsigned height, unsigned channels, const un
 	glGenTextures(1, &ret.handle);
 	glBindTexture(GL_TEXTURE_2D, ret.handle);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, internFormat, width, height, 0, externFormat, isFloat ? GL_FLOAT : GL_UNSIGNED_BYTE, pixels);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -160,7 +166,7 @@ void freeTexture(Texture &tex)
 }
 
 
-frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors)
+frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors, const bool *isFloat, const int *channels)
 {
 	glLog("TODO", "State management + better depth buffer + options");
 
@@ -176,7 +182,7 @@ frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors)
 
 	for (int i = 0; i < numColors && i < 8; i++)
 	{
-		ret.colors[i] = makeTexture(width, height, 4, 0);
+		ret.colors[i] = makeTexture(width, height, channels && channels[i] != 0 ? channels[i] : 4, 0, isFloat ? isFloat[i] : false);
 		glFramebufferTexture(GL_FRAMEBUFFER, attachments[i], ret.colors[i].handle, 0);
 	}
 

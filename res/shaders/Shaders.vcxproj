@@ -120,12 +120,16 @@
     <None Include="lighting.vs" />
     <None Include="lPass.fs" />
     <None Include="lPass.vs" />
+    <None Include="lSPass.fs" />
+    <None Include="lSPass.vs" />
     <None Include="nBlur.fs" />
     <None Include="nBlur.vs" />
     <None Include="post.fs" />
     <None Include="post.vs" />
     <None Include="simple.fs" />
     <None Include="simple.vs" />
+    <None Include="sPass.fs" />
+    <None Include="sPass.vs" />
     <None Include="texture.fs" />
     <None Include="texture.vs" />
     <None Include="textureAlt.fs" />

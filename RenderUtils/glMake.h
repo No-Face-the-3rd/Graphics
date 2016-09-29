@@ -17,14 +17,14 @@ Shader makeShader(const char *vsource, const char *fsource, bool depth = true, b
 void freeShader(Shader &shader);
 
 
-Texture makeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char *pixels);
+Texture makeTexture(unsigned width, unsigned height, unsigned channels, const void *pixels, bool isFloat = false);
 
 Texture makeTextureF(unsigned square, const float *pixels);
 
 void freeTexture(Texture &tex);
 
 
-frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors);
+frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors, const bool *isFloat = nullptr, const int *channels = nullptr);
 
 void freeFrameBuffer(frameBuffer &buff);
 
