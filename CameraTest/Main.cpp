@@ -48,8 +48,8 @@ void main()
 	gallery.loadShader("post","../res/shaders/post.vs", "../res/shaders/post.fs");
 	gallery.loadShader("nBlur", "../res/shaders/nBlur.vs", "../res/shaders/nBlur.fs", false);
 
-	gallery.loadShader("sPass", "../res/shaders/sPass.vs", "../res/shaders/sPass.frag", true, false, false);
-	gallery.loadShader("lSPass", "../res/shaders/lSPass.vs", "../res/shaders/lSPass.frag", false, true);
+	gallery.loadShader("sPass", "../res/shaders/sPass.vs", "../res/shaders/sPass.fs", true, false, false);
+	gallery.loadShader("lSPass", "../res/shaders/lSPass.vs", "../res/shaders/lSPass.fs", false, true);
 
 	gallery.loadObjectOBJ("cube", "../res/models/cube.obj");
 	gallery.loadObjectOBJ("sphere", "../res/models/sphere.obj");
@@ -91,7 +91,8 @@ void main()
 	frameBuffer screen = { 0,1360,768,1 };
 
 	
-	frameBuffer sFrame = makeFrameBuffer(1024, 1024, 0);
+	bool isf[] = {true};
+	frameBuffer sFrame = makeFrameBuffer(1024, 1024, 1, isf);
 
 	gallery.makeGeometry("quee", quadVerts, 4, quadTris, 6);
 
@@ -130,8 +131,9 @@ void main()
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("quee"), sFrame, glm::translate(glm::vec3(-2, 0, -2)) * glm::rotate(45.0f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::scale(glm::vec3(2.0f, 2.0f, 1.0f)), lightView[0], lightProj);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("sphere"), sFrame, mod, lightView[0], lightProj);
 
-		tDraw(gallery.getShader("lPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[0], lightView[0], lightProj);
+		//tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::mat4(), camView, camProj, curTime, sFrame.depth, sFrame.depth, sFrame.depth);
 
+		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[0], lightView[0], lightProj);
 
 		tDraw(gallery.getShader("nBlur"), gallery.getGeometry("quee"), nFrame, gFrame.colors[1], 3);
 
@@ -140,7 +142,7 @@ void main()
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("quee"), sFrame, glm::translate(glm::vec3(-2, 0, -2)) * glm::rotate(45.0f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::scale(glm::vec3(2.0f, 2.0f, 1.0f)), lightView[1], lightProj);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("sphere"), sFrame, mod, lightView[1], lightProj);
 
-		tDraw(gallery.getShader("lPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[1], lightView[1], lightProj);
+		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[1], lightView[1], lightProj);
 
 		clearFrameBuffer(sFrame);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("spear"), sFrame, mod, lightView[2], lightProj);
@@ -148,7 +150,8 @@ void main()
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("sphere"), sFrame, mod, lightView[2], lightProj);
 
 
-		tDraw(gallery.getShader("lPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[2], lightView[2], lightProj);
+
+		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[2], lightView[2], lightProj);
 
 
 		tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::scale(glm::vec3(0.5,0.5,1.0)), glm::mat4(), glm::mat4(), curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2]);
