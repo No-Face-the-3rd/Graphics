@@ -127,31 +127,37 @@ void main()
 		//draw(gallery.getShader("lighting"), gallery.getGeometry("spear"), frame, glm::value_ptr( glm::translate(glm::vec3(4.0f, 0.0f,0.0f)) * mod), glm::value_ptr(view), glm::value_ptr(proj), tray, 3, curTime);
 		
 		clearFrameBuffer(sFrame);
-		tDraw(gallery.getShader("sPass"), gallery.getGeometry("spear"), sFrame, mod, lightView[0], lightProj);
+		tDraw(gallery.getShader("sPass"), gallery.getGeometry("spear"), sFrame, mod, lightView[0], lightProj, curTime, 10.0f);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("quee"), sFrame, glm::translate(glm::vec3(-2, 0, -2)) * glm::rotate(45.0f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::scale(glm::vec3(2.0f, 2.0f, 1.0f)), lightView[0], lightProj);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("sphere"), sFrame, mod, lightView[0], lightProj);
 
+		tDraw(gallery.getShader("nBlur"), gallery.getGeometry("quee"), nFrame, sFrame.depth, 5);
 		//tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::mat4(), camView, camProj, curTime, sFrame.depth, sFrame.depth, sFrame.depth);
 
-		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[0], lightView[0], lightProj);
+		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], nFrame.colors[0], lightCols[0], lightView[0], lightProj);
 
-		tDraw(gallery.getShader("nBlur"), gallery.getGeometry("quee"), nFrame, gFrame.colors[1], 3);
 
 		clearFrameBuffer(sFrame);
-		tDraw(gallery.getShader("sPass"), gallery.getGeometry("spear"), sFrame, mod, lightView[1], lightProj);
+		clearFrameBuffer(nFrame);
+		tDraw(gallery.getShader("sPass"), gallery.getGeometry("spear"), sFrame, mod, lightView[1], lightProj, 0.0f, 0.0f);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("quee"), sFrame, glm::translate(glm::vec3(-2, 0, -2)) * glm::rotate(45.0f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::scale(glm::vec3(2.0f, 2.0f, 1.0f)), lightView[1], lightProj);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("sphere"), sFrame, mod, lightView[1], lightProj);
 
-		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[1], lightView[1], lightProj);
+		tDraw(gallery.getShader("nBlur"), gallery.getGeometry("quee"), nFrame, sFrame.depth, 5);
+
+
+		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], nFrame.colors[0], lightCols[1], lightView[1], lightProj);
 
 		clearFrameBuffer(sFrame);
-		tDraw(gallery.getShader("sPass"), gallery.getGeometry("spear"), sFrame, mod, lightView[2], lightProj);
+		clearFrameBuffer(nFrame);
+		tDraw(gallery.getShader("sPass"), gallery.getGeometry("spear"), sFrame, mod, lightView[2], lightProj, 0.0f, 0.0f);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("quee"), sFrame, glm::translate(glm::vec3(-2, 0, -2)) * glm::rotate(45.0f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::scale(glm::vec3(2.0f, 2.0f, 1.0f)), lightView[2], lightProj);
 		tDraw(gallery.getShader("sPass"), gallery.getGeometry("sphere"), sFrame, mod, lightView[2], lightProj);
 
+		tDraw(gallery.getShader("nBlur"), gallery.getGeometry("quee"), nFrame, sFrame.depth, 5);
 
 
-		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], sFrame.depth, lightCols[2], lightView[2], lightProj);
+		tDraw(gallery.getShader("lSPass"), gallery.getGeometry("quee"), lFrame, mod, camView, camProj, curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2], gFrame.colors[3], nFrame.colors[0], lightCols[2], lightView[2], lightProj);
 
 
 		tDraw(gallery.getShader("post"), gallery.getGeometry("quee"), screen, glm::scale(glm::vec3(0.5,0.5,1.0)), glm::mat4(), glm::mat4(), curTime, gFrame.colors[0], gFrame.colors[1], gFrame.colors[2]);
@@ -213,7 +219,9 @@ void main()
 	}
 
 	freeFrameBuffer(gFrame);
-
+	freeFrameBuffer(nFrame);
+	freeFrameBuffer(lFrame);
+	freeFrameBuffer(sFrame);
 
 	freeTexture(tex);
 	freeTexture(tex2);
