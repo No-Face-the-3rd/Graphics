@@ -1,6 +1,6 @@
 #include "gManager.h"
 
-
+#include "glm\ext.hpp"
 gManager::gManager(unsigned width, unsigned height, const char *name)
 {
 	screenWidth = width;
@@ -65,6 +65,10 @@ void gManager::initShaders()
 
 void gManager::initGeometry()
 {
+	gallery.loadObjectOBJ("cube", "../res/models/cube.obj");
+	gallery.loadObjectOBJ("sphere", "../res/models/sphere.obj");
+	gallery.loadObjectOBJ("spear", "../res/models/soulspear.obj");
+	gallery.makeGeometry("quad", quadVerts, 4, quadTris, 6);
 }
 
 void gManager::initFrameBuffers()
@@ -72,3 +76,8 @@ void gManager::initFrameBuffers()
 
 }
 
+void gManager::initLights()
+{
+	ambLight = glm::vec3(0.1f, 0.1f, 0.2f);
+	lightProj = glm::ortho<float>(-10, 10, -10, 10, -10, 10);
+}

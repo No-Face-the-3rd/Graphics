@@ -13,79 +13,82 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Prior">
+      <UniqueIdentifier>{ae17424c-9f93-4fe6-b843-9b9890da8804}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="camera.fs">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Prior</Filter>
     </None>
     <None Include="camera.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="height.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="height.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="lighting.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="lighting.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="post.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="post.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="simple.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="simple.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="texture.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="texture.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="textureAlt.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="textureAlt.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="gPass.vs">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Prior</Filter>
     </None>
     <None Include="gPass.fs">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Prior</Filter>
     </None>
-    <None Include="lPass.vs">
-      <Filter>Resource Files</Filter>
+    <None Include="gPass.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="height.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="height.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="lighting.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="lighting.vs">
+      <Filter>Resource Files\Prior</Filter>
     </None>
     <None Include="lPass.fs">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Prior</Filter>
     </None>
-    <None Include="nBlur.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="nBlur.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="sPass.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="sPass.fs">
-      <Filter>Resource Files</Filter>
+    <None Include="lPass.vs">
+      <Filter>Resource Files\Prior</Filter>
     </None>
     <None Include="lSPass.fs">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Prior</Filter>
     </None>
     <None Include="lSPass.vs">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="nBlur.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="nBlur.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="post.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="post.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="simple.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="simple.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="sPass.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="sPass.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="texture.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="texture.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="textureAlt.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="textureAlt.vs">
+      <Filter>Resource Files\Prior</Filter>
     </None>
   </ItemGroup>
 </Project>

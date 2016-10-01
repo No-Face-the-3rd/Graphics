@@ -28,6 +28,7 @@ public:
 	std::vector<dirLight> dirLights;
 
 	glm::mat4 lightProj;
+	glm::vec3 ambLight;
 
 	std::string name;
 
@@ -44,6 +45,7 @@ private:
 	void initShaders();
 	void initGeometry();
 	void initFrameBuffers();
+	void initLights();
 };
 
 

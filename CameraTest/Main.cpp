@@ -91,8 +91,7 @@ void main()
 	frameBuffer screen = { 0,1360,768,1 };
 
 	
-	bool isf[] = {true};
-	frameBuffer sFrame = makeFrameBuffer(1024, 1024, 1, isf);
+	frameBuffer sFrame = makeFrameBuffer(1024, 1024, 0);
 
 	gallery.makeGeometry("quee", quadVerts, 4, quadTris, 6);
 

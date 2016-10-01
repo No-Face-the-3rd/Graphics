@@ -99,6 +99,7 @@ const frameBuffer & gallery::getFrameBuffer(const char * name)
 
 bool gallery::init()
 {
+	frameBuffers["screen"] = { 0,1360, 768,1 };
 	return true;
 }
 
