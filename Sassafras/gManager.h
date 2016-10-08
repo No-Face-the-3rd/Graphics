@@ -39,7 +39,7 @@ public:
 	bool step();
 	bool draw();
 	bool term();
-
+	
 private:
 	void initTextures();
 	void initShaders();

@@ -11,7 +11,7 @@ gManager::gManager(unsigned width, unsigned height, const char *name)
 bool gManager::init()
 {
 	window.init(screenWidth, screenHeight, name.c_str());
-	gallery.init();
+	gallery.init(screenWidth, screenHeight);
 	timer.init();
 	input.init(window);
 	
@@ -60,7 +60,7 @@ void gManager::initTextures()
 
 void gManager::initShaders()
 {
-
+	gallery.loadShader("meowGPass", "../res/shaders/meowGPass.vs", "../res/shaders/meowGPass.fs");
 }
 
 void gManager::initGeometry()
@@ -73,7 +73,8 @@ void gManager::initGeometry()
 
 void gManager::initFrameBuffers()
 {
-
+	bool floatTex[] = { false, true, false, true, true };
+	gallery.makeFrameBuffer("meowGFrame", screenWidth, screenHeight, 5, floatTex);
 }
 
 void gManager::initLights()

@@ -37,7 +37,7 @@ public:
 	const Texture &getTexture(const char *name);
 	const frameBuffer &getFrameBuffer(const char *name);
 
-	bool init();
+	bool init(unsigned int width = 1360, unsigned int height = 768);
 	bool term();
 
 };

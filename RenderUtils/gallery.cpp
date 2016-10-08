@@ -97,9 +97,9 @@ const frameBuffer & gallery::getFrameBuffer(const char * name)
 	return frameBuffers.at(name);
 }
 
-bool gallery::init()
+bool gallery::init(unsigned int width, unsigned int height)
 {
-	frameBuffers["screen"] = { 0,1360, 768,1 };
+	frameBuffers["screen"] = { 0,width, height,1 };
 	return true;
 }
 
