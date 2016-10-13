@@ -122,6 +122,10 @@
     <None Include="lPass.vs" />
     <None Include="lSPass.fs" />
     <None Include="lSPass.vs" />
+    <None Include="meowGPass.fs" />
+    <None Include="meowGPass.vs" />
+    <None Include="meowToScreen.fs" />
+    <None Include="meowToScreen.vs" />
     <None Include="nBlur.fs" />
     <None Include="nBlur.vs" />
     <None Include="post.fs" />

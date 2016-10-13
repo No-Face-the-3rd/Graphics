@@ -14,9 +14,9 @@ layout(location = 4) out vec4 outGlow;
 
 
 layout(location = 0) uniform mat4 model;
-layout(location = 0) uniform mat4 view;
-layout(location = 0) uniform mat4 proj;
-layout(location = 0) uniform float time;
+layout(location = 1) uniform mat4 view;
+layout(location = 2) uniform mat4 proj;
+layout(location = 3) uniform float opacity;
 
 layout(location = 4) uniform sampler2D diffM;
 layout(location = 5) uniform sampler2D normalM;
@@ -35,6 +35,7 @@ void main()
 	norm = vec4((TBN * (2.0f * texture(normalM, vUV).xyz - 1.0f)), 1.0f);
 
 	outAlbedo = texture(diffM, vUV);
+	outAlbedo.a = opacity;
 	outNorm = vec4(norm.xyz, 0);
 	outSpec = texture(specM, vUV);
 	outPos = posit;

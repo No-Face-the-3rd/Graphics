@@ -46,6 +46,7 @@ private:
 	void initGeometry();
 	void initFrameBuffers();
 	void initLights();
+	void initObjects();
 };
 
 

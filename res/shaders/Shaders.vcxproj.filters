@@ -90,5 +90,17 @@
     <None Include="textureAlt.vs">
       <Filter>Resource Files\Prior</Filter>
     </None>
+    <None Include="meowGPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowToScreen.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowToScreen.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

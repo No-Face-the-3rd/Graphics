@@ -14,8 +14,19 @@ class obJect
 {
 public:
 	glm::vec3 position, rotation, scale;
+	std::string geometry;
 	std::vector<std::string> textures;
 	glm::vec3 velocity, angularVel;
+	float opacity;
+
+	obJect(glm::vec3 pos = glm::vec3(), glm::vec3 rotate = glm::vec3(), glm::vec3 scaLe = glm::vec3(), std::string geo = "quad", glm::vec3 vel = glm::vec3(), glm::vec3 angVel = glm::vec3(), float opaque = 1.0f);
+
+
+	void setTextures(std::string diffuse, std::string normal = "black", std::string specular = "black", std::string glow = "black");
+
+
+	glm::mat4 model();
+
 private:
 	
 };
@@ -23,6 +34,7 @@ private:
 class dirLight
 {
 	glm::vec3 dir, color;
+	bool castShadows;
 };
 
 

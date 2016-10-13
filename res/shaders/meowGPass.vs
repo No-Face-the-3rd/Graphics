@@ -13,15 +13,14 @@ out vec4 vNorm;
 out vec2 vUV;
 
 layout(location = 0) uniform mat4 model;
-layout(location = 0) uniform mat4 view;
-layout(location = 0) uniform mat4 proj;
-layout(location = 0) uniform float time;
+layout(location = 1) uniform mat4 view;
+layout(location = 2) uniform mat4 proj;
+layout(location = 3) uniform float opacity;
 
 layout(location = 4) uniform sampler2D diffM;
 layout(location = 5) uniform sampler2D normalM;
 layout(location = 6) uniform sampler2D specM;
 layout(location = 7) uniform sampler2D glowM;
-
 
 
 void main()
