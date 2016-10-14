@@ -12,7 +12,7 @@ Geometry makeGeometry(const struct vertex *verts, size_t v_size, const unsigned 
 void freeGeometry(Geometry &geo);
 
 
-Shader makeShader(const char *vsource, const char *fsource, bool depth = true, bool add = false, bool face = true);
+Shader makeShader(const char *vsource, const char *fsource, bool depth = true, bool add = false, bool face = true, bool alph = false);
 
 void freeShader(Shader &shader);
 

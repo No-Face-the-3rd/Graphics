@@ -31,6 +31,14 @@ void useShaderFlags(const Shader &shader)
 	}
 	else
 		glDisable(GL_BLEND);
+
+	if (shader.alphaBlend)
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	else
+		glDisable(GL_BLEND);
 	
 }
 

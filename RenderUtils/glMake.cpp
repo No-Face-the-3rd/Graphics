@@ -53,9 +53,9 @@ void freeGeometry(Geometry &geo)
 }
 
 
-Shader makeShader(const char *vsource, const char *fsource, bool depth, bool add, bool face)
+Shader makeShader(const char *vsource, const char *fsource, bool depth, bool add, bool face, bool alph)
 {
-	Shader retVal = { 0, depth, add, face };
+	Shader retVal = { 0, depth, add, face, alph };
 
 	//create variables
 	retVal.handle = glCreateProgram();

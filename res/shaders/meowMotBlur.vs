@@ -5,9 +5,11 @@
 layout(location = 0) in vec4 position;
 layout(location = 3) in vec2 texCoord;
 
-out vec2 vUV;
+layout(location = 0) uniform sampler2D prevFrame;
+layout(location = 1) uniform sampler2D curFrame;
+layout(location = 2) uniform float ratio;
 
-layout(location = 0) uniform sampler2D diffM;
+out vec2 vUV;
 
 void main()
 {

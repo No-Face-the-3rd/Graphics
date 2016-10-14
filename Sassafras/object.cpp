@@ -27,11 +27,16 @@ void obJect::setTextures(std::string diffuse, std::string normal, std::string sp
 
 glm::mat4 obJect::model()
 {
-	glm::mat4 ret = glm::mat4();
+	glm::mat4 ret;
 	ret = glm::translate(ret, position);
 	ret = glm::rotate(ret, rotation.y, glm::vec3(0, 1, 0));
 	ret = glm::rotate(ret, rotation.x, glm::vec3(1, 0, 0));
 	ret = glm::rotate(ret, rotation.z, glm::vec3(0, 0, 1));
-	ret = glm::scale(scale);
+	ret = glm::scale(ret, scale);
 	return ret;
+}
+
+bool cmpOp(const obJect & a, const obJect & b)
+{
+	return a.opacity > b.opacity;
 }

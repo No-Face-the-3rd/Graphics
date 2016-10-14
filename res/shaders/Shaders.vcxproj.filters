@@ -102,5 +102,23 @@
     <None Include="meowToScreen.fs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="meowGlowBlurHoriz.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowBlurHoriz.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowBlurVert.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowBlurVert.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowMotBlur.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowMotBlur.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

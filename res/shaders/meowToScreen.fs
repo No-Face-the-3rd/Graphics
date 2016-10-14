@@ -13,5 +13,4 @@ void main()
 {
 	
 	outColor = texture(diffM, vUV);
-
 }

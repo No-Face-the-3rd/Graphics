@@ -41,12 +41,15 @@ public:
 	bool term();
 	
 private:
+	void initCam();
 	void initTextures();
 	void initShaders();
 	void initGeometry();
 	void initFrameBuffers();
 	void initLights();
 	void initObjects();
+
+	void stepObjects();
 };
 
 

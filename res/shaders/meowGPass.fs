@@ -35,11 +35,11 @@ void main()
 	norm = vec4((TBN * (2.0f * texture(normalM, vUV).xyz - 1.0f)), 1.0f);
 
 	outAlbedo = texture(diffM, vUV);
-	outAlbedo.a = opacity;
 	outNorm = vec4(norm.xyz, 0);
 	outSpec = texture(specM, vUV);
 	outPos = posit;
 	outGlow = texture(glowM, vUV);
+	outAlbedo.a = outNorm.a = outSpec.a = outGlow.a = opacity;
 }
 
 mat3 cotangent_frame(in vec3 n, in vec3 p, in vec2 uv)

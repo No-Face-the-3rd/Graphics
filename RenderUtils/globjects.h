@@ -22,6 +22,7 @@ struct Shader
 	bool depthTest;
 	bool additiveBlend;
 	bool faceCulling;
+	bool alphaBlend;
 };
 
 

@@ -122,8 +122,14 @@
     <None Include="lPass.vs" />
     <None Include="lSPass.fs" />
     <None Include="lSPass.vs" />
+    <None Include="meowGlowBlurHoriz.fs" />
+    <None Include="meowGlowBlurHoriz.vs" />
+    <None Include="meowGlowBlurVert.fs" />
+    <None Include="meowGlowBlurVert.vs" />
     <None Include="meowGPass.fs" />
     <None Include="meowGPass.vs" />
+    <None Include="meowMotBlur.fs" />
+    <None Include="meowMotBlur.vs" />
     <None Include="meowToScreen.fs" />
     <None Include="meowToScreen.vs" />
     <None Include="nBlur.fs" />
