@@ -4,17 +4,17 @@
 
 layout(location = 0) uniform mat4 view;
 
-layout(location = 2) uniform sampler2D albedoM;
-layout(location = 3) uniform sampler2D normalM;
-layout(location = 4) uniform sampler2D specM;
-layout(location = 5) uniform sampler2D positionM;
-layout(location = 6) uniform sampler2D shadowM;
+layout(location = 1) uniform sampler2D albedoM;
+layout(location = 2) uniform sampler2D normalM;
+layout(location = 3) uniform sampler2D specM;
+layout(location = 4) uniform sampler2D positionM;
+layout(location = 5) uniform sampler2D shadowM;
 
-layout(location = 7) uniform vec4 lCol;
-layout(location = 8) uniform mat4 lView;
-layout(location = 9) uniform mat4 lProj;
-layout(location = 10) uniform vec4 AmbCol;
-layout(location = 11) uniform float shadowBias = 0.1f;
+layout(location = 6) uniform vec4 lCol;
+layout(location = 7) uniform mat4 lView;
+layout(location = 8) uniform mat4 lProj;
+layout(location = 9) uniform vec4 AmbCol;
+layout(location = 10) uniform float shadowBias = 0.1f;
 
 layout(location = 0) out vec4 outColor;
 
@@ -50,7 +50,6 @@ void main()
 	vec4 calcAlbedo = texture(albedoM, vUV) * lamb * lCol;
 	vec4 calcSpec = texture(specM, vUV) * spec * lCol;
 	outColor = calcAmb + calcAlbedo + calcSpec;
-
 }
 
 

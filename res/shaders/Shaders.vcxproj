@@ -126,6 +126,8 @@
     <None Include="meowGlowBlurHoriz.vs" />
     <None Include="meowGlowBlurVert.fs" />
     <None Include="meowGlowBlurVert.vs" />
+    <None Include="meowGlowCombPass.fs" />
+    <None Include="meowGlowCombPass.vs" />
     <None Include="meowGPass.fs" />
     <None Include="meowGPass.vs" />
     <None Include="meowLightPass.fs" />

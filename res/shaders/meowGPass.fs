@@ -29,6 +29,7 @@ void main()
 {
 	vec4 posit = vPos;
 	vec4 norm = vNorm;
+
 	
 	mat3 TBN = cotangent_frame(norm.xyz, posit.xyz, vUV);
 

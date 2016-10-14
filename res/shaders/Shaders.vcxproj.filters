@@ -132,5 +132,11 @@
     <None Include="meowShadPass.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="meowGlowCombPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowCombPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
