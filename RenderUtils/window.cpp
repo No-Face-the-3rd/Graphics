@@ -19,7 +19,7 @@ void APIENTRY GL_errorCallback(GLenum source, GLenum type, GLuint id, GLenum sev
 
 
 
-bool Window::init(int a_width, int a_height, char * a_title)
+bool Window::init(int a_width, int a_height, const char * a_title)
 {
 	width = a_width;
 	height = a_height;
@@ -35,7 +35,7 @@ bool Window::init(int a_width, int a_height, char * a_title)
 
 	glewExperimental = true;
 	glewInit();
-	glClearColor(1.0f,0.0f,1.0f,1.0f);
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
 
 
 #ifdef _DEBUG

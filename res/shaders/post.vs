@@ -41,9 +41,9 @@ layout(location = 14) uniform float specPow;
 void main()
 {
 
+	vColor = color;
 
-
-	gl_Position = position;
+	gl_Position = model * position;
 	UV = texCoord;
 
 }

@@ -1,24 +1,24 @@
 #include "gallery.h"
 
-bool gallery::makeShader(const char * name, const char * vSource, const char * fSource)
+bool gallery::makeShader(const char * name, const char * vSource, const char * fSource, bool depth, bool add, bool face, bool alph)
 {
 	if (shaders.find(name) != shaders.end())
 	{
 		return false;
 	}
 	else
-		shaders[name] = ::makeShader(vSource, fSource);
+		shaders[name] = ::makeShader(vSource, fSource, depth, add, face, alph);
 	return true;
 }
 
-bool gallery::loadShader(const char * name, const char * vPath, const char * fPath)
+bool gallery::loadShader(const char * name, const char * vPath, const char * fPath, bool depth, bool add, bool face, bool alph)
 {
 	if (shaders.find(name) != shaders.end())
 	{
 		return false;
 	}
 	else
-		shaders[name] = ::loadShader(vPath, fPath);
+		shaders[name] = ::loadShader(vPath, fPath, depth, add, face, alph);
 	return true;
 }
 
@@ -49,12 +49,12 @@ bool gallery::loadObjectOBJ(const char * name, const char * path)
 	return true;
 }
 
-bool gallery::makeTexture(const char * name, unsigned width, unsigned height, unsigned format, const unsigned char * pixels)
+bool gallery::makeTexture(const char * name, unsigned width, unsigned height, unsigned channels, const void * pixels, bool isFloat)
 {
 	if (textures.find(name) != textures.end())
 		return false;
 	else
-		textures[name] = ::makeTexture(width, height, format, pixels);
+		textures[name] = ::makeTexture(width, height, channels, pixels, isFloat);
 
 	return true;
 }
@@ -65,6 +65,15 @@ bool gallery::loadTexture(const char * name, const char * path)
 		return false;
 	else
 		textures[name] = ::loadTexture(path);
+	return true;
+}
+
+bool gallery::makeFrameBuffer(const char * name, unsigned width, unsigned height, unsigned numColors, const bool * isFloat, const int * channels)
+{
+	if (frameBuffers.find(name) != frameBuffers.end())
+		return false;
+	else
+		frameBuffers[name] = ::makeFrameBuffer(width, height, numColors, isFloat, channels);
 	return true;
 }
 
@@ -83,10 +92,17 @@ const Texture & gallery::getTexture(const char * name)
 	return textures.at(name);
 }
 
-bool gallery::init()
+const frameBuffer & gallery::getFrameBuffer(const char * name)
 {
+	return frameBuffers.at(name);
+}
+
+bool gallery::init(unsigned int width, unsigned int height)
+{
+	frameBuffers["screen"] = { 0,width, height,1 };
 	return true;
 }
+
 
 bool gallery::term()
 {
@@ -101,6 +117,10 @@ bool gallery::term()
 	for each(auto texture in textures)
 	{
 		freeTexture(texture.second);
+	}
+	for each(auto buffer in frameBuffers)
+	{
+		freeFrameBuffer(buffer.second);
 	}
 
 	return true;

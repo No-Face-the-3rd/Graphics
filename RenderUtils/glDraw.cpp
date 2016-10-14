@@ -12,6 +12,36 @@ void clearFrameBuffer(const frameBuffer & buff)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+void useShaderFlags(const Shader &shader)
+{
+	if (shader.depthTest)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+
+	if (shader.faceCulling)
+		glEnable(GL_CULL_FACE);
+	else
+		glDisable(GL_CULL_FACE);
+
+	if (shader.additiveBlend)
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_ONE, GL_ONE);
+	}
+	else
+		glDisable(GL_BLEND);
+
+	if (shader.alphaBlend)
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	else if(!shader.additiveBlend)
+		glDisable(GL_BLEND);
+	
+}
+
 void tDraw_internal::tDraw_begin(const Shader & shader, const Geometry & geo, const frameBuffer & buff)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, buff.handle);
@@ -19,8 +49,7 @@ void tDraw_internal::tDraw_begin(const Shader & shader, const Geometry & geo, co
 	glBindVertexArray(geo.vao);
 
 
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
+	useShaderFlags(shader);
 
 	glViewport(0, 0, buff.width, buff.height);
 
@@ -38,6 +67,7 @@ void tDraw_internal::tDraw_close(const Shader & shader, const Geometry & geo, co
 
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 }
 
 size_t tDraw_internal::tDraw_format(size_t idx, size_t texInd, float val)
@@ -69,6 +99,12 @@ size_t tDraw_internal::tDraw_format(size_t idx, size_t texInd, const glm::mat3 &
 size_t tDraw_internal::tDraw_format(size_t idx, size_t texInd, const glm::mat4 & val)
 {
 	glUniformMatrix4fv(idx, 1, GL_FALSE, glm::value_ptr(val));
+	return 0;
+}
+
+size_t tDraw_internal::tDraw_format(size_t idx, size_t texInd, const glm::vec2 & val)
+{
+	glUniform3fv(idx, 1, glm::value_ptr(val));
 	return 0;
 }
 

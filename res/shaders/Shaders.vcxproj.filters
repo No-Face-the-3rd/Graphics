@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Prior">
+      <UniqueIdentifier>{ae17424c-9f93-4fe6-b843-9b9890da8804}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="camera.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="camera.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="gPass.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="gPass.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="height.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="height.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="lighting.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="lighting.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="lPass.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="lPass.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="lSPass.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="lSPass.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="nBlur.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="nBlur.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="post.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="post.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="simple.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="simple.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="sPass.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="sPass.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="texture.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="texture.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="textureAlt.fs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="textureAlt.vs">
+      <Filter>Resource Files\Prior</Filter>
+    </None>
+    <None Include="meowGPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowToScreen.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowToScreen.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowBlurHoriz.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowBlurHoriz.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowBlurVert.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowBlurVert.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowMotBlur.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowMotBlur.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowLightPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowLightPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowShadPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowShadPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowCombPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowGlowCombPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

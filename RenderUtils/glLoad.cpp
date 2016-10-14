@@ -59,7 +59,7 @@ Geometry loadOBJ(const char * path)
 	return retVal;
 }
 
-Shader loadShader(const char * vShaderFile, const char * fShaderFile)
+Shader loadShader(const char * vShaderFile, const char * fShaderFile, bool depth, bool add, bool face, bool alph)
 {
 	std::string vCode, fCode;
 	std::ifstream vertShaderFile(vShaderFile);
@@ -77,7 +77,7 @@ Shader loadShader(const char * vShaderFile, const char * fShaderFile)
 
 	const char *vertCode = vCode.c_str(), *fragCode = fCode.c_str();
 
-	return makeShader(vertCode, fragCode);
+	return makeShader(vertCode, fragCode, depth, add, face, alph);
 }
 
 
@@ -99,21 +99,6 @@ Texture loadTexture(const char * path)
 		return ret;
 	}
 
-	switch (format)
-	{
-	case STBI_grey:
-		format = GL_RED;
-		break;
-	case STBI_grey_alpha:
-		format = GL_RG;
-		break;
-	case STBI_rgb:
-		format = GL_RGB;
-		break;
-	case STBI_rgb_alpha:
-		format = GL_RGBA;
-		break;
-	}
 
 	ret = makeTexture(width, height, format, pixels);
 	stbi_image_free(pixels);

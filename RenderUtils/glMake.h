@@ -12,19 +12,19 @@ Geometry makeGeometry(const struct vertex *verts, size_t v_size, const unsigned 
 void freeGeometry(Geometry &geo);
 
 
-Shader makeShader(const char *vsource, const char *fsource);
+Shader makeShader(const char *vsource, const char *fsource, bool depth = true, bool add = false, bool face = true, bool alph = false);
 
 void freeShader(Shader &shader);
 
 
-Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char *pixels);
+Texture makeTexture(unsigned width, unsigned height, unsigned channels, const void *pixels, bool isFloat = false);
 
 Texture makeTextureF(unsigned square, const float *pixels);
 
 void freeTexture(Texture &tex);
 
 
-frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors);
+frameBuffer makeFrameBuffer(unsigned width, unsigned height, unsigned numColors, const bool *isFloat = nullptr, const int *channels = nullptr);
 
 void freeFrameBuffer(frameBuffer &buff);
 
