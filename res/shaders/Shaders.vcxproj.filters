@@ -120,5 +120,17 @@
     <None Include="meowMotBlur.fs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="meowLightPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowLightPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowShadPass.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="meowShadPass.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

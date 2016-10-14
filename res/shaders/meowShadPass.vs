@@ -11,6 +11,6 @@ layout(location = 2) uniform mat4 proj;
 
 void main()
 {
-	gl_position = proj * view * model * position;
+	gl_Position = proj * view * model * position;
 }
 

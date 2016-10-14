@@ -45,6 +45,7 @@ bool gManager::draw()
 	clearFrameBuffer(gallery.getFrameBuffer("meowGlVBlur"));
 	clearFrameBuffer(gallery.getFrameBuffer("meowCurFrame"));
 	clearFrameBuffer(gallery.getFrameBuffer("meowMotBlur"));
+	clearFrameBuffer(gallery.getFrameBuffer("meowLightPass"));
 	glm::mat4 camView = cam.getView(), camProj = cam.getProjection();
 	for each(auto object in objects)
 	{
@@ -61,29 +62,21 @@ bool gManager::draw()
 
 	for each(auto light in dirLights)
 	{
+		clearFrameBuffer(gallery.getFrameBuffer("meowShadPass"));
 		if (light.castShadows)
 		{
 			for each(auto object in objects)
 			{
 				glm::mat4 mod = object.model();
-				glm::mat4 lightView = glm::lookAt(-glm::normalize(light.dir), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
-				Texture diff = gallery.getTexture(object.textures.at(0).c_str());
-				Texture norm = gallery.getTexture(object.textures.at(1).c_str());
-				Texture spec = gallery.getTexture(object.textures.at(2).c_str());
-				Texture glow = gallery.getTexture(object.textures.at(3).c_str());
+				glm::mat4 lightView = light.view();
 				tDraw(gallery.getShader("meowShadPass"), gallery.getGeometry(object.geometry.c_str()), gallery.getFrameBuffer("meowShadPass"), mod, lightView, lightProj);
 			}
-
-
 		}
-		else
-		{
-
-		}
+		tDraw(gallery.getShader("meowLightPass"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowLightPass"), camView, gallery.getFrameBuffer("meowGFrame").colors[0], gallery.getFrameBuffer("meowGFrame").colors[1], gallery.getFrameBuffer("meowGFrame").colors[2],gallery.getFrameBuffer("meowGFrame").colors[3], gallery.getFrameBuffer("meowShadPass").depth, glm::vec4(light.color,1.0f),light.view(),lightProj,glm::vec4(ambLight, 1.0f));
 	}
 
 
-	tDraw(gallery.getShader("meowMotBlur"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowMotBlur"), gallery.getFrameBuffer("meowPrevFrame").colors[0], gallery.getFrameBuffer("meowGFrame").colors[0], 0.5f);
+	tDraw(gallery.getShader("meowMotBlur"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowMotBlur"), gallery.getFrameBuffer("meowPrevFrame").colors[0], gallery.getFrameBuffer("meowShadPass").depth, 0.5f);
 
 	tDraw(gallery.getShader("meowToFrame"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowCurFrame"), gallery.getFrameBuffer("meowMotBlur").colors[0]);
 	//draw curFrame to prevFrame
@@ -131,7 +124,7 @@ void gManager::initShaders()
 	gallery.loadShader("meowGlowBlurVert", "../res/shaders/meowGlowBlurVert.vs", "../res/shaders/meowGlowBlurVert.fs");
 	gallery.loadShader("meowMotBlur", "../res/shaders/meowMotBlur.vs", "../res/shaders/meowMotBlur.fs");
 	gallery.loadShader("meowLightPass", "../res/shaders/meowLightPass.vs", "../res/shaders/meowLightPass.fs");
-	gallery.loadShader("meowShadPass", "../res/shaders/meowShadPass.vs", "../res/shaders/meowShadPass.fs");
+	gallery.loadShader("meowShadPass", "../res/shaders/meowShadPass.vs", "../res/shaders/meowShadPass.fs", true);
 }
 
 void gManager::initGeometry()
@@ -148,9 +141,9 @@ void gManager::initFrameBuffers()
 	gallery.makeFrameBuffer("meowGFrame", screenWidth, screenHeight, 5, meowGTex);
 	gallery.makeFrameBuffer("meowGlHBlur", screenWidth, screenHeight, 1, meowGlowBlurTex);
 	gallery.makeFrameBuffer("meowGlVBlur", screenWidth, screenHeight, 1, meowGlowBlurTex);
-	gallery.makeFrameBuffer("meowPrevFrame", screenWidth, screenHeight, 1);
-	gallery.makeFrameBuffer("meowCurFrame", screenWidth, screenHeight, 1);
-	gallery.makeFrameBuffer("meowMotBlur", screenWidth, screenHeight, 1);
+	gallery.makeFrameBuffer("meowPrevFrame", screenWidth, screenHeight, 1, meowGlowBlurTex);
+	gallery.makeFrameBuffer("meowCurFrame", screenWidth, screenHeight, 1, meowGlowBlurTex);
+	gallery.makeFrameBuffer("meowMotBlur", screenWidth, screenHeight, 1, meowGlowBlurTex);
 	gallery.makeFrameBuffer("meowLightPass", screenWidth, screenHeight, 1);
 	gallery.makeFrameBuffer("meowShadPass", screenWidth, screenHeight, 0);
 }
@@ -158,7 +151,7 @@ void gManager::initFrameBuffers()
 void gManager::initLights()
 {
 	ambLight = glm::vec3(0.1f, 0.1f, 0.2f);
-	lightProj = glm::ortho<float>(-10, 10, -10, 10, -10, 10);
+	lightProj = glm::ortho<float>(-20, 20, -20, 20, -20, 20);
 	dirLight meow;
 	meow.dir = glm::vec3(-1.0f, -1.0f, -1.0f);
 	meow.color = glm::vec3(1.0f, 1.0f, 1.0f);

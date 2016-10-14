@@ -40,3 +40,9 @@ bool cmpOp(const obJect & a, const obJect & b)
 {
 	return a.opacity > b.opacity;
 }
+
+glm::mat4 dirLight::view()
+{
+	glm::mat4 ret = glm::lookAt(-glm::normalize(dir), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	return ret;
+}

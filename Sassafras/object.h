@@ -37,6 +37,7 @@ class dirLight
 public:
 	glm::vec3 dir, color;
 	bool castShadows;
+	glm::mat4 view();
 };
 
 

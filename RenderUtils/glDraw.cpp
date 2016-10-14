@@ -37,7 +37,7 @@ void useShaderFlags(const Shader &shader)
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
-	else
+	else if(!shader.additiveBlend)
 		glDisable(GL_BLEND);
 	
 }
@@ -67,6 +67,7 @@ void tDraw_internal::tDraw_close(const Shader & shader, const Geometry & geo, co
 
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 }
 
 size_t tDraw_internal::tDraw_format(size_t idx, size_t texInd, float val)
