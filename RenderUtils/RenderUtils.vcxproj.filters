@@ -13,13 +13,85 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\glUtils">
+      <UniqueIdentifier>{9ef8678e-fcf0-4c1f-980e-e04e8e68ca97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\glUtils">
+      <UniqueIdentifier>{c155e9cd-cf27-4d55-bf30-1d41e1d3133b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gallery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="procgen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glMake.cpp">
+      <Filter>Source Files\glUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="glLoad.cpp">
+      <Filter>Source Files\glUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="glDraw.cpp">
+      <Filter>Source Files\glUtils</Filter>
+    </ClCompile>
     <ClCompile Include="crenderutils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Decs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gallery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timeManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="procgen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glinclude.h">
+      <Filter>Header Files\glUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="globjects.h">
+      <Filter>Header Files\glUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="glMake.h">
+      <Filter>Header Files\glUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="glLoad.h">
+      <Filter>Header Files\glUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="glDraw.h">
+      <Filter>Header Files\glUtils</Filter>
+    </ClInclude>
     <ClInclude Include="crenderutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
