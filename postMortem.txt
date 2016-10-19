@@ -1,0 +1,1 @@
+If there had been time, I had hoped to implement a hologram-esque effect. I did not quite implement the glow effect in the way I desired entirely. The glow makes the glowy parts white and glowy rather than colored and glowy. I would find more in depth coverage of the content. I would spend less time setting up the system to easily implement new shaders.
