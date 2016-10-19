@@ -79,7 +79,7 @@ bool gManager::draw()
 
 	tDraw(gallery.getShader("meowGlowCombPass"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowGlowCombPass"), gallery.getFrameBuffer("meowLightPass").colors[0], gallery.getFrameBuffer("meowGlVBlur").colors[0]);
 
-	tDraw(gallery.getShader("meowMotBlur"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowMotBlur"), gallery.getFrameBuffer("meowPrevFrame").colors[0], gallery.getFrameBuffer("meowGlowCombPass").colors[0], 0.75f);
+	tDraw(gallery.getShader("meowMotBlur"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowMotBlur"), gallery.getFrameBuffer("meowPrevFrame").colors[0], gallery.getFrameBuffer("meowGlowCombPass").colors[0], 0.5f);
 
 	tDraw(gallery.getShader("meowToFrame"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowCurFrame"), gallery.getFrameBuffer("meowMotBlur").colors[0]);
 	//draw curFrame to prevFrame
@@ -172,7 +172,7 @@ void gManager::initLights()
 void gManager::initObjects()
 {
 	obJect tmp = obJect(glm::vec3());
-	tmp.setTextures("meow", "meow", "meow", "meow");
+	tmp.setTextures("meow", "meow", "meow");
 	tmp.opacity = 1.0f;
 	objects.push_back(tmp);
 	obJect tmp2 = obJect(glm::vec3(0.0f,0.0f,2.0f));
