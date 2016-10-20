@@ -16,13 +16,14 @@ obJect::obJect(glm::vec3 pos, glm::vec3 rotate, glm::vec3 scaLe, std::string geo
 	opacity = opaque;
 }
 
-void obJect::setTextures(std::string diffuse, std::string normal, std::string specular, std::string glow)
+void obJect::setTextures(std::string diffuse, std::string normal, std::string specular, std::string glow, std::string vertHeight)
 {
 	textures.clear();
 	textures.push_back(diffuse);
 	textures.push_back(normal);
 	textures.push_back(specular);
 	textures.push_back(glow);
+	textures.push_back(vertHeight);
 }
 
 glm::mat4 obJect::model()

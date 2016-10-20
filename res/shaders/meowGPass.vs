@@ -21,14 +21,16 @@ layout(location = 4) uniform sampler2D diffM;
 layout(location = 5) uniform sampler2D normalM;
 layout(location = 6) uniform sampler2D specM;
 layout(location = 7) uniform sampler2D glowM;
+layout(location = 8) uniform sampler2D vertHM;
 
 
 void main()
 {
-	vPos = view * model * position;
+	vUV = texCoord;
+	vec4 posit = position + normal * (texture(vertHM, vUV) * 2.0f - 1.0f).g;
+	vPos = view * model * posit;
 	vNorm = view * model * normal;
 
-	vUV = texCoord;
 
-	gl_Position = proj * view * model * position;
+	gl_Position = proj * vPos;
 }

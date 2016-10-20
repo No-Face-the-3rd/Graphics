@@ -56,7 +56,8 @@ bool gManager::draw()
 		Texture norm = gallery.getTexture(object.textures.at(1).c_str());
 		Texture spec = gallery.getTexture(object.textures.at(2).c_str());
 		Texture glow = gallery.getTexture(object.textures.at(3).c_str());
-		tDraw(gallery.getShader("meowGPass"), gallery.getGeometry(object.geometry.c_str()), gallery.getFrameBuffer("meowGFrame"), mod, camView, camProj, object.opacity, diff, norm, spec, glow);
+		Texture vertHeight = gallery.getTexture(object.textures.at(4).c_str());
+		tDraw(gallery.getShader("meowGPass"), gallery.getGeometry(object.geometry.c_str()), gallery.getFrameBuffer("meowGFrame"), mod, camView, camProj, object.opacity, diff, norm, spec, glow, vertHeight);
 	}
 
 	tDraw(gallery.getShader("meowGlowBlurHoriz"), gallery.getGeometry("quad"), gallery.getFrameBuffer("meowGlHBlur"), gallery.getFrameBuffer("meowGFrame").colors[4], 10);
@@ -108,7 +109,7 @@ void gManager::initCam()
 
 void gManager::initTextures()
 {
-	unsigned char blackPixels[] = { 0,0,0,0 }, whitePixels[] = { 255,255,255,0 }, grayPixels[] = { 125,125,125,0 };
+	unsigned char blackPixels[] = { 0,0,0,0 }, whitePixels[] = { 255,255,255,0 }, grayPixels[] = { 127.75,127.75,127.75,0 };
 	gallery.makeTexture("black", 1, 1, 4, blackPixels, false);
 	gallery.makeTexture("white", 1, 1, 4, whitePixels, false);
 	gallery.makeTexture("gray", 1, 1, 4, grayPixels, false);

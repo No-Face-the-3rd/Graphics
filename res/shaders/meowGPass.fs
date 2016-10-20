@@ -22,6 +22,7 @@ layout(location = 4) uniform sampler2D diffM;
 layout(location = 5) uniform sampler2D normalM;
 layout(location = 6) uniform sampler2D specM;
 layout(location = 7) uniform sampler2D glowM;
+layout(location = 8) uniform sampler2D vertHM;
 
 mat3 cotangent_frame(in vec3 n, in vec3 p, in vec2 uv);
 
